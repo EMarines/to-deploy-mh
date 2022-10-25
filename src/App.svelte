@@ -12,6 +12,7 @@
   </div>
   <h1>Math Home</h1>
   <h3>Bienes Raíces</h3>
+  <h5>Tu patrimonio en buenas manos</h5>
 
   <div class="card">
     <!-- <Counter /> -->
