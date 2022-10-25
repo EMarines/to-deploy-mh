@@ -13,6 +13,7 @@
   <h1>Math Home</h1>
   <h3>Bienes Raíces</h3>
   <h5>Tu patrimonio en buenas manos</h5>
+  <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis odio, ex modi nulla fugiat beatae fugit quas minima tenetur earum aspernatur incidunt veniam ullam repellat facere praesentium asperiores vel similique hic inventore officia possimus ducimus nisi! Accusamus perferendis pariatur enim ratione reiciendis minima, labore quibusdam voluptas mollitia praesentium quis rerum quae non, vero, esse possimus eum sapiente iusto nobis molestias.</p>
 
   <div class="card">
     <!-- <Counter /> -->
