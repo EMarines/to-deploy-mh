@@ -11,12 +11,19 @@
     import Sinergias from "./Sinergias.svelte";
     // import AltaContacto from './AltaContacto.svelte'
     // import AltaPropiedad from './AltaPropiedad.svelte';
-    // import login from './Login.svelte'
+    import login from './Login.svelte'
     // import logoMH from '../assets/images/logoMH.png'
+    import Registro from "./Registro.svelte";
     import Login from "./Login.svelte";
+    import { isLogged } from '../store/isLogged'
     // import SelectProperty from '../components/SelectProperty.svelte';
    
-   
+   let isLoggedUser = false;
+
+   isLogged.subscribe((data) => {
+    isLoggedUser = data;
+   });
+
 </script>
   <!-- Navbar -->
     <div class= "nav">
@@ -37,7 +44,11 @@
                   <Link to="agenda">Agenda</Link>
                   <Link to="sinergias">Sinergias</Link>
                   <Link to="about">About</Link>
-                  <Link to="login">Login</Link>
+                  {#if !isLoggedUser}
+                    <Link to="registro">Registro</Link>
+                    <Link to="login">Login</Link>
+                  {/if}
+
 
                   <!-- <Link to="selectContact">SelectedContact</Link>       -->
               </nav>
@@ -77,9 +88,12 @@
           <!-- <Route path = "altaContacto">
             <AltaContacto />
           </Route> -->
-          
           <Route path = "login">
             <Login />
+          </Route>
+
+          <Route path = "registro">
+            <Registro />
           </Route>
           
           <!-- <Route path="altaPropiedad">

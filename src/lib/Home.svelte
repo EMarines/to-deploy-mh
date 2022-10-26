@@ -6,13 +6,14 @@
   // import Propiedades from './Propiedades.svelte';
   import Agenda from './Agenda.svelte';
   import Sinergias from './Sinergias.svelte';
-  import Login from "./Login.svelte";
+  import Login from "./Registro.svelte";
+  import Registro from "./Registro.svelte";
   // import Schedule from '../components/Schedule.svelte'
   // import Binnacle from '../components/Binnacle.svelte'
   // import user from '../assets/images/add-user.png';
   // import home from '../assets/images/house.png';
   // import schedule from '../assets/images/schedule.png';
-  // import team from '../assets/images/team.png';
+  import team from '../assets/images/team.png';
   // import { dbContacts, dbProperties, dbTodos } from '../firebase'
 
   // let fecha;
@@ -68,7 +69,7 @@
           <div class="container" >
             <div class="optionCard">
               <p> Sinergias</p>
-              <!-- <img src= {team} alt='sinergias' class="profile-img"> -->
+              <img src= {team} alt='sinergias' class="profile-img">
               <h1 class="name">Sinergias</h1>
             </div>
           </div>  
@@ -98,6 +99,10 @@
 
       <Route path="/login">
         <Login />
+      </Route>
+
+      <Route path="/registro">
+        <Registro />
       </Route>
 
     </div>
