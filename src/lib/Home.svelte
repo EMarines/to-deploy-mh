@@ -6,8 +6,8 @@
   // import Propiedades from './Propiedades.svelte';
   import Agenda from './Agenda.svelte';
   import Sinergias from './Sinergias.svelte';
-  import Login from "./Registro.svelte";
-  import Registro from "./Registro.svelte";
+  import Login from "./Register.svelte";
+  import Registro from "./Register.svelte";
   // import Schedule from '../components/Schedule.svelte'
   // import Binnacle from '../components/Binnacle.svelte'
   // import user from '../assets/images/add-user.png';

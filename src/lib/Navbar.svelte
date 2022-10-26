@@ -13,17 +13,21 @@
     // import AltaPropiedad from './AltaPropiedad.svelte';
     import login from './Login.svelte'
     // import logoMH from '../assets/images/logoMH.png'
-    import Registro from "./Registro.svelte";
+    import Registro from "./Register.svelte";
     import Login from "./Login.svelte";
     import { isLogged } from '../store/isLogged'
+    import { useAuthUser } from '../hooks/useAuthUser'
     // import SelectProperty from '../components/SelectProperty.svelte';
    
-   let isLoggedUser = false;
+    // useAuthUser();
+    
+    let isLoggedUser = false;
 
    isLogged.subscribe((data) => {
     isLoggedUser = data;
    });
 
+  //  console.log(isLoggedUser)
 </script>
   <!-- Navbar -->
     <div class= "nav">
@@ -45,7 +49,7 @@
                   <Link to="sinergias">Sinergias</Link>
                   <Link to="about">About</Link>
                   {#if !isLoggedUser}
-                    <Link to="registro">Registro</Link>
+                    <Link to="register">Registro</Link>
                     <Link to="login">Login</Link>
                   {/if}
 
@@ -92,7 +96,7 @@
             <Login />
           </Route>
 
-          <Route path = "registro">
+          <Route path = "register">
             <Registro />
           </Route>
           

@@ -1,24 +1,13 @@
 <script>
    import { Link } from "svelte-navigator";
    import { auth } from "../../firebase";
-   import { signInWithEmailAndPassword } from "firebase/auth";
+   import { createUserWithEmailAndPassword } from "firebase/auth";
    import { useNavigate } from "svelte-navigator";
-   import Notificacion from "../components/Notifications.svelte";
  
    const navigate = useNavigate();
    let credentials = {
      email: "",
      password: "",
-   };
-   let messageNotification = "";
-   let showNotification = false;
-   const showMessage = (message) => {
-     messageNotification = message;
-     showNotification = true;
- 
-     setTimeout(() => {
-       showNotification = false;
-     }, 2800);
    };
  
    const changeUser = (e) => {
@@ -30,31 +19,29 @@
  
    const loginUser = async () => {
      try {
-       await signInWithEmailAndPassword(
+       await createUserWithEmailAndPassword(
          auth,
          credentials.email,
          credentials.password
        );
        navigate("/");
      } catch (error) {
-       if (error.message === "Firebase: Error (auth/wrong-password).") {
-         showMessage("Contraseña incorrecta")
-       }
+       console.log(error);
      }
    };
  </script>
  
  <div>
-   <Notificacion message={messageNotification} show={showNotification}/>
    <br /><br /><br />
    <div class="form-signin">
-     <h1 class="text-center text-login">Inicia sesión en tu cuenta</h1>
+     <h1 class="text-center text-login">Registra tu cuenta</h1>
      <div class="center">
        <input
          name="email"
-         type="text"
+         type="email"
          class="input-form"
          placeholder="Correo"
+         required
          on:input={(e) => changeUser(e)}
        />
      </div>
@@ -69,14 +56,12 @@
      </div>
      <br />
      <div class="center">
-       <button class="button-signup fondo-color-signup" on:click={loginUser}>
-         Iniciar sesión
-       </button>
+       <button class="button-signup fondo-color-signup" on:click={loginUser}> Registrarse </button>
      </div>
      <p class="text-center">O también</p>
      <br />
      <p class="text-center">
-       ¿Aún no tienes cuenta? <Link to="/register">Registrarse</Link>
+       ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
      </p>
    </div>
  </div>
