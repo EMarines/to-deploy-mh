@@ -7,7 +7,7 @@
   <div>
     <!-- svelte-ignore security-anchor-rel-noreferrer -->
     <a href="https://matchhome.net" target="_blank"> 
-      <img src="/logoMH.png" class="logo" alt="Vite Logo" />
+      <img src="https://firebasestorage.googleapis.com/v0/b/pruebastorageimages.appspot.com/o/logoMH.png?alt=media&token=20221d83-c171-4e8d-8312-73b1bbbe1a47" class="logo" alt="Vite Logo" />
     </a>
   </div>
   <h1>Math Home</h1>
