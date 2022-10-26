@@ -60,9 +60,9 @@
    <Notificacion message={messageNotification} show={showNotification}/>
    <br /><br /><br />
    <div class="form-signin">
-     <h1 class="text-center text-login">Inicia sesión en tu cuenta</h1>
+     <h1 class="text-center text-login">Salir de la sesión</h1>
      <div class="center">
-       <input
+       <!-- <input
          name="email"
          type="text"
          class="input-form"
@@ -77,18 +77,18 @@
          class="input-form"
          placeholder="Contraseña"
          on:input={(e) => changeUser(e)}
-       />
+       /> -->
      </div>
      <br />
      <div class="center">
        <button class="button-signup fondo-color-signup" on:click={loginUser}>
-         Iniciar sesión
+         Estoy seguro que quiero salir?
        </button>
      </div>
-     <p class="text-center">O también</p>
+     <!-- <p class="text-center">O también</p> -->
      <br />
      <p class="text-center">
-       ¿Aún no tienes cuenta? <Link to="/register">Registrarse</Link>
+       O deseas continuar <Link to="/"> Cancelar</Link>
      </p>
    </div>
  </div>
@@ -105,7 +105,7 @@
    .form-signin {
      width: 100%;
      max-width: 520px;
-     height: 380px;
+     height: 240px;
      padding: 15px;
      margin: auto;
      background-color: white;
@@ -117,7 +117,7 @@
    }
  
    /* INPUTS */
-   .input-form {
+   /* .input-form {
      background-color: transparent;
      border: 1.5px solid rgb(0 0 0 / 10%);
      border-radius: 5px;
@@ -130,7 +130,7 @@
      -webkit-box-sizing: content-box;
      box-sizing: content-box;
      margin: 5px;
-   }
+   } */
  
    /* BUTTON SIGNUP */
    .button-signup {
@@ -151,3 +151,4 @@
      background: #833ac7;
    }
  </style>
+

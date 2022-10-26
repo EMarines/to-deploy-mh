@@ -16,7 +16,9 @@
     import Registro from "./Register.svelte";
     import Login from "./Login.svelte";
     import { isLogged } from '../store/isLogged'
+    // import { isAuth } from "../store/isLogged";
     import { useAuthUser } from '../hooks/useAuthUser'
+  import LogOut from "./LogOut.svelte";
     // import SelectProperty from '../components/SelectProperty.svelte';
    
     // useAuthUser();
@@ -40,27 +42,29 @@
           <div class="navMenu">
             <header>
               <!-- <img src={logoMH} alt="MatchHome" class="logoMH">   -->
-              <nav>              
+              <nav> 
+
+                {#if isLogged}
                   <Link to="/">Home</Link>       
                   <Link to="contactos">Contactos</Link>
                   <Link to="propiedades">Propiedades</Link>
                   <Link to="captacion">Captación</Link>            
                   <Link to="agenda">Agenda</Link>
                   <Link to="sinergias">Sinergias</Link>
-                  <Link to="about">About</Link>
-                  {#if !isLoggedUser}
-                    <Link to="register">Registro</Link>
-                    <Link to="login">Login</Link>
-                  {/if}
+                  <Link to="logout">LogOut</Link>
 
+                {:else}
+                  <Link to="about">About</Link>
+                  <Link to="register">Registro</Link>
+                  <Link to="login">Login</Link>
+                {/if}
 
                   <!-- <Link to="selectContact">SelectedContact</Link>       -->
-              </nav>
-            </header>
-          </div>
-        
+                </nav>
+              </header>
+            </div>
+
         <main>
-  <!-- Router -->
            <Route path="/">
             <Home />
           </Route>
@@ -87,6 +91,10 @@
           
           <Route path = "about">
             <About />
+          </Route>
+
+          <Route path = "logout">
+            <LogOut />
           </Route>
 
           <!-- <Route path = "altaContacto">

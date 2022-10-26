@@ -1,4 +1,5 @@
 <script>
+	// import { isLogged } from './../store/isLogged.js';
 	// import FindToErase from './../components/FindToErase.svelte';
   // import { db } from '../assets/db.js'
   import { Router, Route, Link } from "svelte-navigator";
@@ -14,6 +15,7 @@
   // import home from '../assets/images/house.png';
   // import schedule from '../assets/images/schedule.png';
   import team from '../assets/images/team.png';
+  import { isAuth } from '../store/isLogged'
   // import { dbContacts, dbProperties, dbTodos } from '../firebase'
 
   // let fecha;
@@ -28,7 +30,7 @@
 
 <body>
 
-
+  <h1>{$isAuth}</h1>
 
   <!-- Router Menú -->
   
