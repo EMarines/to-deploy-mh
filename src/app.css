@@ -3,7 +3,7 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-
+/* 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -12,9 +12,29 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; */
 }
 
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  padding: 5px;
+  overflow: hidden;
+  box-shadow: 0px 2px 8px 0px gray;
+  background-color: white;
+  text-align: center;
+  border-radius: .5rem;
+  position: relative;
+  margin: 1rem;
+}
+/* 
 a {
   font-weight: 500;
   color: #646cff;
@@ -30,8 +50,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
-
+} */
+/* 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -77,5 +97,5 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
-  }
-}
+  } 
+}  */
