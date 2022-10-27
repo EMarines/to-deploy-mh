@@ -1,11 +1,9 @@
 <script>
 	// import { isAuth, credentials, isLogged } from './../store/isLogged.js';
-   import { Link } from "svelte-navigator";
+   import { Link, useNavigate } from "svelte-navigator";
    import { auth } from "../../firebase";
    import { signInWithEmailAndPassword } from "firebase/auth";
-   import { useNavigate } from "svelte-navigator";
    import Notificacion from "../components/Notifications.svelte";
-   
  
    const navigate = useNavigate();
 

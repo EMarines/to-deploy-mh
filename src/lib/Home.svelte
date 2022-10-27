@@ -57,7 +57,7 @@
           </div>  
         </Link>
 
-        <Link to= "/agenda" title = "agenda">
+        <Link to= "/agenda" title = "agenda" class="s">
           <div class="container" >
             <div class="optionCard">
               <!-- <p><strong>{dbTodos.length} Pendientes</strong></p> -->
@@ -159,6 +159,6 @@
     font-size: 1.5rem;
   }
 
-
+  
 
 </style>

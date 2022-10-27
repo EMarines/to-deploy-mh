@@ -3,7 +3,8 @@
 	// import { conInterest } from './../stores/stores.js';
    
    // Importaciones
-      import { db, dbProperties, dbContacts } from '../firebase';
+      import { db, dbProperties, dbContacts } from '../../firebase';
+      import { Link, useNavigate } from "svelte-navigator";
       import { deleteDoc, doc} from 'firebase/firestore';
       import { property, conInterest } from '../stores/stores'
       import { filtPropContInte } from '../assets/funcions/filContacts'
@@ -12,6 +13,7 @@
       // import { filtPropContInte } from '../assets/funcions/rangValue'
 
    // Declaraciones
+      const navigate = useNavigate();
       let checkedContacts = [];
       let conInt = [];
       let currentId;
@@ -52,8 +54,9 @@
 
       // onCancel
          function onCancel() {
-            location.href = "/propiedades"
-         }
+            // $property = [];
+            navigate("/propiedades")
+         };
 
 </script>
    <!-- Informacion de la propiedad -->
@@ -76,6 +79,7 @@
             </div>
    <!-- Botones -->
             <div class="folowLink">
+               <!-- svelte-ignore security-anchor-rel-noreferrer -->
                <a href={$property.urlProp} target='_blank'>Seguir Link en Otra Ventana</a>        
             </div>
             <div class="optionsSend" >
@@ -91,9 +95,9 @@
    <!-- Material icons -->
             <div>
                <div class="iconContent">
-                  <i on:click = {editProperty} class="material-icons edit">edit</i>
+                  <i on:keydown = {editProperty} class="material-icons edit">edit</i>
                   <!-- <i on:click={viewProperty} class="material-icons irLink"> pageview </i> -->
-                  <i on:click = {deleteProperty} class="material-icons delete" >delete_forever</i>
+                  <i on:keydown = {deleteProperty} class="material-icons delete" >delete_forever</i>
                </div>
             </div>
          </div>

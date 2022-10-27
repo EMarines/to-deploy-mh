@@ -6,14 +6,12 @@ import{ getAuth } from 'firebase/auth'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-
 // Declaraciones
 
   export let dbContacts = [];
   export let dbBinnacle = [];
   export let dbProperties = [];
   export let dbTodos = [];
-
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -32,14 +30,10 @@ const database = initializeApp(firebaseConfig);
 export  const db = getFirestore(database);
 export const auth = getAuth(database)
 
-
-
 const bitacora = collection(db, "binnacles")
 const contactos = collection(db, "contacts")
 const propiedades = collection(db, "properties")
 const tareas = collection(db, "todos")
-
-console.log(contactos)
 
 function getBinnacles() {
   getDocs(bitacora)
@@ -47,7 +41,6 @@ function getBinnacles() {
      return  dbBinnacle = response.docs.map((item) => {
         return {... item.data()};
      })
-     // console.log(dbBinnacle)        
   })
 };
 

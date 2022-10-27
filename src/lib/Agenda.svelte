@@ -8,14 +8,19 @@
       import { todo } from '../stores/stores'
       import { db, dbTodos } from '../../firebase'
       import { formatDate } from '../assets/funcions/sevralFunctions'
-      import AddToSchedule from '../components/AddToSchedule.svelte';
+      import { Link, useNavigate } from "svelte-navigator";
+
+      // import AddToSchedule from '../components/AddToSchedule.svelte';
       // import { id } from '../stores/stores'
      
    // Declaraciones
+      const navigate = useNavigate();
       let error = "";
       let showShedule = false;
-      let editStatus = false;   
+      let editStatus = false; 
       let toRender = [];
+
+      $: renderizar = dbTodos;
    
    // Funciones 
       // Ordena dbTodos por fecha
@@ -33,15 +38,18 @@
 
       // Manejo de Agregar o Editar
          async function handTodos() {
+            console.log(editStatus);
             if(!editStatus){
                const todoToAdd = collection(db, "todos")
                await addDoc(todoToAdd, $todo);
+               console.log(editStatus);
             } else {
                await updateDoc(doc(db, "todos", $todo.id), $todo)
                editStatus = false;
-            }
+               console.log(editStatus);               
+            };
             $todo = []; 
-            location.href= "/contactos"
+            navigate("/")
          };
    
       // Agrega Todo
@@ -81,10 +89,10 @@
       // Close
          function close() {
             $todo=[]; 
-            location.href = "/contactos"
+            navigate("/contactos")
          };
 
-         
+       
 </script>
 
 <!-- <button on:click={getData}>click</button> -->
@@ -94,7 +102,7 @@
 
       <!-- <form id="taskForm"> -->
          <div class="container">      
-            <div class="background" transition:fade on:click ={close}/>
+            <div class="background" transition:fade on:keydown ={close}/>
                <div class="pop-up" transition:fly>         
                   <div>
                      <input type="text" class="inputTask" cols="56" rows="1"  placeholder = "Agrega una Tarea o Cita" bind:value = {$todo.task} />
@@ -117,36 +125,38 @@
 
 <!-- Agrega listado de tareas -->
       <div class= "container">     
-         <h3>Tareas</h3>
-            <ol>
-               {#each toRender as item}
-                  {#if !item.timeTask}
-                     <div>
-                        <li class="schedule" class:complete={item.isComplete}>
-                           <span>
-                              <button on:click={ () => markTodoAsComplete(item.id) }>✔</button>
-                              <button on:click={ () => deleteTodo(item.id) }>✖</button>
-                              <button on:click={ () => editTodo(item)}>✔✖</button>                  
-                           </span>
-                           <spam>
-                              {formatDate(item.endTask)} -*-
-                              {item.task} -*-
-                              {#if item.notes}
-                                 {item.notes} 
-                              {/if}          
-                           </spam>        
-                        </li>
-                     </div>
-                  {/if}
+         {#if !editStatus}
+            <h3>Tareas</h3>
+               <ol>
+                  {#each renderizar as item}
+                     {#if !item.timeTask}
+                        <div>
+                           <li class="schedule" class:complete={item.isComplete}>
+                              <span>
+                                 <button on:click={ () => markTodoAsComplete(item.id) }>✔</button>
+                                 <button on:click={ () => deleteTodo(item.id) }>✖</button>
+                                 <button on:click={ () => editTodo(item)}>✔✖</button>                  
+                              </span>
+                              <spam>
+                                 {formatDate(item.endTask)} -*-
+                                 {item.task} -*-
+                                 {#if item.notes}
+                                    {item.notes} 
+                                 {/if}          
+                              </spam>        
+                           </li>
+                        </div>
+                     {/if}
                   {:else}
-                     <p>No Hay Tareas Pendientes</p>
-               {/each}
+                        <p>No Hay Tareas Pendientes</p>
+                  {/each}
+               
                      <p class="error">{error}</p>
             </ol>
    <!-- Agrega citas -->
          <h3>Agenda</h3>
             <ol>
-               {#each toRender as item}            
+               {#each renderizar as item}            
                   {#if item.timeTask}
                      <div  on:dblclick={() => editTodo}>
                            <li class="schedule" class:complete={item.isComplete}>
@@ -166,11 +176,12 @@
                            </li>
                      </div>
                   {/if}
-                  {:else}
+               {:else}
                      <p>No Hay Tareas Pendientes</p>
                {/each}
-                  <p class="error">{error}</p>
+               <p class="error">{error}</p>
             </ol>
+         {/if}
       </div>
 <!-- Muestra el fomato de schedule -->
          <!-- {#if showShedule}

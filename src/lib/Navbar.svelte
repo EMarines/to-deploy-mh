@@ -2,17 +2,17 @@
   // importaciones 
     // @ts-ignore
     import { Router, Route, Link, navigate } from "svelte-navigator";
+    // import logoMH  from 'src/assets/images/logoMH.png'
     import Home from './Home.svelte'
     import Contactos from './Contactos.svelte'
-    // import Propiedades from './Propiedades.svelte'
-    // import Captacion from './Captacion.svelte'
+    import Propiedades from './Propiedades.svelte'
+    import Captacion from './Captacion.svelte'
     import Agenda from './Agenda.svelte'   
     import About from './About.svelte'
     import Sinergias from "./Sinergias.svelte";
-    // import AltaContacto from './AltaContacto.svelte'
-    // import AltaPropiedad from './AltaPropiedad.svelte';
+    import AltaContacto from './AltaContacto.svelte'
+    import AltaPropiedad from './AltaPropiedad.svelte';
     import login from './Login.svelte'
-    // import logoMH from '../assets/images/logoMH.png'
     import Registro from "./Register.svelte";
     import Login from "./Login.svelte";
     // import { isAuth } from "../store/isLogged";
@@ -65,38 +65,48 @@
   //  console.log(isLoggedUser)
 </script>
   <!-- Navbar -->
-    <div class= "nav">
       <!-- <input type="checkbox" id="check">      
         <label for="check" class="checkbtn">
           <i class="fas fa-bars"></i>
         </label> -->
    
         <Router>
-          <div class="navMenu">
-            <header>
-              <!-- <img src={logoMH} alt="MatchHome" class="logoMH">   -->
-              <nav> 
-                <!-- {#if isLogged} -->
-                  <Link to="/">Home</Link>       
-                  <Link to="contactos">Contactos</Link>
-                  <Link to="propiedades">Propiedades</Link>
-                  <Link to="captacion">Captación</Link>            
-                  <Link to="agenda">Agenda</Link>
-                  <Link to="sinergias">Sinergias</Link>
-                  <Link to="/about" on:click={logout}>LogOut</Link>
 
+
+          <nav class="nav">
+            <div class="nav__container">
+
+              <img src="src/assets/images/logoMH.png" alt="MatchHome" class="nav__logo"> 
+
+              <label class="nav__label" for="menu">
+                <img src="src/assets/images/menu.svg" class="nav__img" alt="menu">
+              </label>
+              <input type="checkbox" id="menu" class="nav__input">
+
+              <div class="nav__menu">
+                <!-- {#if isLogged} -->
+                <!-- <div id="nav__item"> -->
+                <Link to="/">Home</Link>  
+                <Link to="contactos">Contactos</Link>
+                <Link to="propiedades">Propiedades</Link>
+                <!-- <Link to="captacion">Captación</Link>             -->
+                <Link to="agenda">Agenda</Link>
+                <!-- <Link to="sinergias">Sinergias</Link> -->
+                <Link to="/about" on:click={logout}>LogOut</Link>
+                
                 <!-- {:else} -->
-                  <Link to="about">About</Link>
-                  <Link to="register">Registro</Link>
-                  <Link to="login">Login</Link>
+                <!-- <Link to="about">About</Link> -->
+                <Link to="register">Registro</Link>
+                <Link to="login">Login</Link>
+              <!-- </div>      -->
+              </div>
                 <!-- {/if} -->
 
                   <!-- <Link to="selectContact">SelectedContact</Link>       -->
-                </nav>
-              </header>
-            </div>
+             
+              </div>
+            </nav>
 
-        <main>
            <Route path="/">
             <Home />
           </Route>
@@ -105,13 +115,13 @@
             <Contactos />
           </Route>
           
-          <!-- <Route path="propiedades">
+          <Route path="propiedades">
             <Propiedades />
           </Route>
           
           <Route path="captacion">
             <Captacion />
-          </Route> -->
+          </Route>
           
           <Route path="agenda">
             <Agenda />
@@ -147,143 +157,81 @@
             <SelectProperty />
           </Route> -->
           
-        </main>
 
-        
-      <!-- <a href="https://matchhome.net" target="_blank" class="enlace"> 
-        <img src={logoMH} class="logoMH" alt="MatchHome" />
-      </a> -->
-        
       </Router>
       
-      <section>
         
-      </section>
-    </div>
 
    
 <style> 
 
-  .nav{
-    background: #2fcdcd;
-    height: auto;
-    width: 100%;
-    padding: 40px;
+
+.nav{
+  background: #2ab712;
+  height: 80px;
+  color: #fff;
+}
+
+.nav__img{
+  width: 40px;
+  color: #fff;
+}
+
+.nav__container{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+}
+
+.nav__logo{
+  width: 80px; 
+}
+
+  .nav__label, .nav__input{
+    display: none;
   }
-  /* .enlace{
-    position: absolute;
-    padding: 20px 50px;
-  } */
 
-  /* .logoMH {
-    height: 40px;
-  }
-
-  .logoMH:hover {
-    filter: drop-shadow(0 0 2em #000000aa);
-  }  */
-
-  /* .nav ul{
-    float: right;
-    margin-right: 20px;
-  } */
-
-  /* .nav ul li{
-    display: inline-block;
-    line-height: 80px;
-    margin: 0 5px;
-  } */
-
-  /* .logoNavbar{
-    display: flex;
-    align-items: center;
-  } */
-
-  /* .nav ul li a{
+  /* a{
     color: #fff;
-    font-size: 18px;
-    padding: 7px 13pz;
-    border-radius: 3px;
-    text-transform: uppercase;
+    text-decoration: none;
   } */
 
-  /* li:active, li:hover{
-    background: #000090;
-    transition: .5s;
-  } */
+  .nav__input:checked + .nav__menu{
+    clip-path: circle(100% at center);
+  } 
+
+  .nav__menu{
+    display: grid;
+    grid-auto-flow: column;
+    gap: 3em;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 700px){
+    .nav__label{
+      display: block;
+      cursor: pointer;
+    }
+    .nav__menu{
+      position: fixed;
+      top: 80px;
+      bottom: 0;
+      background: #f08080;
+      width: 100%;
+      left: 0;
+      display: flex;
+      justify-content: space-evenly;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
+      clip-path: circle(0 at center);
+      transition: clip-path 2s easy-in-out;
+    }
+  }
   
-  /* .checkbtn{
-    font-size: 30px;
-    color: #fff;
-    float: right;
-    line-height: 80px;
-    margin-right: 40px;
-    cursor:pointer;
-    display: none;
-  } */
-
-  /* #check{
-    display: none;
-  } */
-
-  /* section{
-    background: url(logMh);
-    background-size: cover;
-    background-position: center center;
-    height: calc(100vh -80);
-  } */
-
-  /* @media (max-width: 952px){ */
-    /* .enlace{
-      padding-left: 20px;
-    } */
-
-    /* .nav ul li a{
-      font-size: 16px;
-    } */
-
-  /* } */
-
-  /* @media (max-width: 858px){ */
-   /* .checkbtn{
-     display: block;
-   } */
-
-   /* nav{
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background: #2c3e50;
-    top: 80px;
-    left: -100%;
-    text-align: center;
-    transition: all .5s;
-   } */
-
-   /* .nav ul li{
-    display: block;
-    margin: 5px 0;
-    line-height: 30px;
-   } */
-
-   /* .nav ul li a{
-    font-size: 20px;
-   } */
-
-  /* .hide:hover, li{
-    background: none;
-    color: red;
-   }  */
-
-   /* #check:checked, ~ ul{
-    left: 0;
-   }  */
-/*    
-  .nav{
-    display: block;
-  } */
-
-
-  /* } */
-
 </style>
