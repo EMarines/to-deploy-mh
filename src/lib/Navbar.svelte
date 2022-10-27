@@ -3,7 +3,7 @@
     // @ts-ignore
     import { Router, Route, Link, navigate } from "svelte-navigator";
     import Home from './Home.svelte'
-    // import Contactos from './Contactos.svelte'
+    import Contactos from './Contactos.svelte'
     // import Propiedades from './Propiedades.svelte'
     // import Captacion from './Captacion.svelte'
     import Agenda from './Agenda.svelte'   
@@ -101,11 +101,11 @@
             <Home />
           </Route>
           
-          <!-- <Route path="/contactos">
+          <Route path="/contactos">
             <Contactos />
           </Route>
           
-          <Route path="propiedades">
+          <!-- <Route path="propiedades">
             <Propiedades />
           </Route>
           
