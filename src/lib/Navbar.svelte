@@ -1,7 +1,7 @@
 <script>
   // importaciones 
     // @ts-ignore
-    import { Router, Route, Link } from "svelte-navigator";
+    import { Router, Route, Link, navigate } from "svelte-navigator";
     import Home from './Home.svelte'
     // import Contactos from './Contactos.svelte'
     // import Propiedades from './Propiedades.svelte'
@@ -15,19 +15,52 @@
     // import logoMH from '../assets/images/logoMH.png'
     import Registro from "./Register.svelte";
     import Login from "./Login.svelte";
-    import { isLogged } from '../store/isLogged'
     // import { isAuth } from "../store/isLogged";
-    import { useAuthUser } from '../hooks/useAuthUser'
-  import LogOut from "./LogOut.svelte";
+    // import { useAuthUser } from '../hooks/useAuthUser'
+    import LogOut from "./LogOut.svelte";
+    import { signOut, onAuthStateChanged } from "firebase/auth";
+    import { auth } from "../../firebase";
+    import { isLogged } from '../store/isLogged'
+
     // import SelectProperty from '../components/SelectProperty.svelte';
    
     // useAuthUser();
-    
+
+
+    // console.log(credentials)
+    console.log("logged? ", $isLogged)
     let isLoggedUser = false;
 
    isLogged.subscribe((data) => {
     isLoggedUser = data;
    });
+
+   async function logout(){
+    console.log($isLogged)
+   }
+
+  //     try {
+  //       console.log(auth)
+  //        await signOut(auth)
+  //        $isLogged = false;
+  //       console.log(auth)
+
+  //        // @ts-ignore
+  //        credentials = {};
+  //       //  navigate("/login")                 
+  //       console.log($isLogged)
+
+  //     } catch (error) {
+  //        console.log($isLogged)
+  //     }
+  //  }
+   
+
+  //  onAuthStateChanged(auth, authUser =>{
+  //     // @ts-ignore
+  //     credentials = authUser;
+  //     $isLogged = !!authUser
+  //  })
 
   //  console.log(isLoggedUser)
 </script>
@@ -43,21 +76,20 @@
             <header>
               <!-- <img src={logoMH} alt="MatchHome" class="logoMH">   -->
               <nav> 
-
-                {#if isLogged}
+                <!-- {#if isLogged} -->
                   <Link to="/">Home</Link>       
                   <Link to="contactos">Contactos</Link>
                   <Link to="propiedades">Propiedades</Link>
                   <Link to="captacion">Captación</Link>            
                   <Link to="agenda">Agenda</Link>
                   <Link to="sinergias">Sinergias</Link>
-                  <Link to="logout">LogOut</Link>
+                  <Link to="/about" on:click={logout}>LogOut</Link>
 
-                {:else}
+                <!-- {:else} -->
                   <Link to="about">About</Link>
                   <Link to="register">Registro</Link>
                   <Link to="login">Login</Link>
-                {/if}
+                <!-- {/if} -->
 
                   <!-- <Link to="selectContact">SelectedContact</Link>       -->
                 </nav>

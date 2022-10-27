@@ -1,5 +1,5 @@
 <script>
-	import { isAuth } from './../store/isLogged.js';
+	// import { isAuth, credentials, isLogged } from './../store/isLogged.js';
    import { Link } from "svelte-navigator";
    import { auth } from "../../firebase";
    import { signInWithEmailAndPassword } from "firebase/auth";
@@ -27,6 +27,7 @@
    };
  
    const changeUser = (e) => {
+     // @ts-ignore
      credentials = {
        ...credentials,
        [e.target.name]: e.target.value,
@@ -34,25 +35,19 @@
    };
  
    const loginUser = async () => {
-     try {
-       await signInWithEmailAndPassword(
-         auth,
-         credentials.email,
-         credentials.password
-         );
-         console.log(auth, credentials.email)
-         if(auth){
-            $isAuth = true;
-         // @ts-ignore
-         showMessage("Te logeaste con ")
-      }
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        credentials.email,
+        credentials.password
+      );
       navigate("/");
-     } catch (error) {
-       if (error.message === "Firebase: Error (auth/wrong-password).") {
-         showMessage("Contraseña incorrecta")
-       }
-     }
-   };
+    } catch (error) {
+      if (error.message === "Firebase: Error (auth/wrong-password).") {
+        showMessage("Contraseña incorrecta")
+      }
+    }
+  };
 
  </script>
  
@@ -61,6 +56,7 @@
    <br /><br /><br />
    <div class="form-signin">
      <h1 class="text-center text-login">Inicia sesión en tu cuenta</h1>
+     <!-- <h2>{ $credentials.email}</h2> -->
      <div class="center">
        <input
          name="email"
