@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;900&display=swap'); */
 
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -32,9 +32,9 @@ body{
   margin: 0 auto;
 }
 
+
 .container {
   width: 97%;
-  min-width: 65px;
   padding: 5px;
   overflow: hidden;
   box-shadow: 0px 2px 8px 0px gray;
@@ -42,7 +42,7 @@ body{
   text-align: center;
   border-radius: .5rem;
   position: relative;
-  margin: 1rem;
+  margin: 1em auto;
   align-items: center;
 }
 
@@ -58,6 +58,47 @@ body{
   position: relative;
   margin: 1rem;
 }
+
+
+
+/* PAGINACION */
+
+    .pagi__Item{
+      display: felx;
+    }
+
+    .pagi__options{
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    .mosPag{
+      display: row;
+    }
+
+/* BOTONES */
+
+    .btn__cancel{
+      width: 250px;
+      height: 35px;
+      color:rgb(11, 14, 11);
+      font-size: 25px;
+      font-weight: 400;
+      background-color: rgb(193, 226, 7);
+      border-radius: 8px;
+    }
+
+    .btn__save{
+      width: 250px;
+      height: 35px;
+      color:rgb(11, 14, 11);
+      font-size: 25px;
+      font-weight: 400;
+      background-color: rgb(36, 223, 8);
+      border-radius: 8px;
+      margin-right: 50px;
+    }
+
 /* 
 a {
   font-weight: 500;

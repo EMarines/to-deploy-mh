@@ -107,41 +107,41 @@
 
             <!-- Paginación del en Dom -->
                <div class = "container pagination">
-                  <ul>
-                  <!-- <div class="pagiItem"> -->
-                     
-                     {#if currentPage > 1}
-                        <li><a href="/blog" on:click|preventDefault={() => setCurrentPage(1)}>first</a></li>
-                        <li><a href="/blog/{currentPage - 1}" on:click|preventDefault={() => setCurrentPage(currentPage - 1)}>previous</a></li>
-                     {/if}
-                     <!-- </div> -->
-                     
-                     <!-- <div class="pagiItem"> -->
-                        {#each [3,2,1] as i}
-                           {#if currentPage - i > 0}
-                              <li><a href="/blog/{currentPage - i}" on:click|preventDefault={() => setCurrentPage(currentPage - i)}>{currentPage - i}</a></li>
-                           {/if}
-                        {/each}
-                        <!-- </div> -->
-
-                     <li><span>{currentPage}</span></li>
-               
-                  <!-- <div class="pagiItem"> -->
-                        {#each Array(3) as _, i}
-                           {#if currentPage + (i+1) <= totalPages}
-                              <li><a href="/blog/{currentPage + (i+1)}" on:click|preventDefault={() => setCurrentPage(currentPage + (i+1))}>{currentPage + (i+1)}</a></li>
-                           {/if}
-                        {/each}
-                  <!-- </div> -->
-      
-      
-                 <!-- <div class="pagiItem">  -->
-                        {#if currentPage < totalPages}
-                           <li><a href="/blog/{currentPage + 1}" on:click|preventDefault={() => setCurrentPage(currentPage + 1)}>next</a></li>
-                           <li><a href="/blog/{totalPages}" on:click|preventDefault={() => setCurrentPage(totalPages)}>last</li>
+                  <div class="pagi__Item">
+                     <ul class="pagi__options">
+                        
+                        {#if currentPage > 1}
+                           <li><a href="/blog" on:click|preventDefault={() => setCurrentPage(1)}>first</a></li>
+                           <li><a href="/blog/{currentPage - 1}" on:click|preventDefault={() => setCurrentPage(currentPage - 1)}>previous</a></li>
                         {/if}
-                 <!-- </div> -->
-                  </ul>      
+                        <!-- </div> -->
+                        
+                        <!-- <div class="pagiItem"> -->
+                           {#each [3,2,1] as i}
+                              {#if currentPage - i > 0}
+                                 <li><a href="/blog/{currentPage - i}" on:click|preventDefault={() => setCurrentPage(currentPage - i)}>{currentPage - i}</a></li>
+                              {/if}
+                           {/each}
+                           <!-- </div> -->
+
+                        <li><span>{currentPage}</span></li>
+                  
+                     <!-- <div class="pagiItem"> -->
+                           {#each Array(3) as _, i}
+                              {#if currentPage + (i+1) <= totalPages}
+                                 <li><a href="/blog/{currentPage + (i+1)}" on:click|preventDefault={() => setCurrentPage(currentPage + (i+1))}>{currentPage + (i+1)}</a></li>
+                              {/if}
+                           {/each}
+                     <!-- </div> -->
+         
+         
+                  <!-- <div class="pagiItem">  -->
+                           {#if currentPage < totalPages}
+                              <li><a href="/blog/{currentPage + 1}" on:click|preventDefault={() => setCurrentPage(currentPage + 1)}>next</a></li>
+                              <li><a href="/blog/{totalPages}" on:click|preventDefault={() => setCurrentPage(totalPages)}>last</li>
+                           {/if}
+                     </ul>      
+                  </div>
                </div>
 
             </div>
@@ -195,10 +195,5 @@
    .imgTitle{
       max-width: 148px;
    }
-
-   .mosPag{
-      display: flex;
-   }
-
 
  </style>

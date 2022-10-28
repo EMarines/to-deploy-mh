@@ -85,8 +85,8 @@
                 <ContData />
                 <!-- <PropData /> -->
                   <div class="contSavCan">        
-                    <button class="btn-save" on:click={()=>handSubmit($contact)}>{#if !editStatus}Guardar{:else}Editar{/if}</button>         
-                    <button class="btn-cancel" on:click={onCancel}>Cancel</button>
+                    <button class="btn__save" on:click={()=>handSubmit($contact)}>{#if !editStatus}Guardar{:else}Editar{/if}</button>         
+                    <button class="btn__cancel" on:click={onCancel}>Cancel</button>
                   </div>
                 </div>              
               <!-- </form> -->

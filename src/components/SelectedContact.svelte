@@ -88,6 +88,7 @@
       const onCancel = () => {
           editStatus = false;
           filteredProperties = [];
+          $contact=[];
           $systStatus = "start";
       };
 
@@ -191,7 +192,7 @@
           </div>
             
           <div>
-            <button class="btnCommon btnCancel" on:click={onCancel}>Cancelar</button>
+            <button class="btn__cancel" on:click={onCancel}>Cancelar</button>
           </div>
 
           <div>
@@ -236,11 +237,7 @@
                 </main>
               {/if}
         {/if}
-
-    <!-- Muestra el form de Alta de Contacto -->
-        
-        
-        </main>
+      </main>
 <style>
 
   h3{

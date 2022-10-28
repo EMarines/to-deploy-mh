@@ -1,15 +1,12 @@
 <script>
-  // import { useNavigate } from "svelte-navigator";
   import Navbar from './lib/Navbar.svelte'
 
-  // const navigate = useNavigate();
   let showIntro = true;
 
 setTimeout(()=>{
   showIntro = false
   console.log("object");
-  // location.href="/"
-}, 3500)
+}, 1500)
 </script>
 
 <nav class="navBar">

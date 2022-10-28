@@ -1,6 +1,5 @@
 
 <script>
-	// import { conInterest } from './../stores/stores.js';
    
    // Importaciones
       import { db, dbProperties, dbContacts } from '../../firebase';
@@ -10,6 +9,7 @@
       import { filtPropContInte } from '../assets/funcions/filContacts'
       import { systStatus } from '../stores/stores';
       import ContactCard from './CardProperty.svelte';
+      import { claim_space } from 'svelte/internal';
       // import { filtPropContInte } from '../assets/funcions/rangValue'
 
    // Declaraciones
@@ -29,7 +29,9 @@
 
    // Edit
          function editProperty() {
+            console.log("propEditing");
             $systStatus = "propEditing"
+            console.log("propEditing");
          };
 
    // Delete Contact
@@ -54,53 +56,56 @@
 
       // onCancel
          function onCancel() {
-            // $property = [];
-            navigate("/propiedades")
+            $property = [];
+            $systStatus="start"
          };
 
 </script>
    <!-- Informacion de la propiedad -->
-         <div class=" container selectProduct">   
-               
-            <div class="selectImage">
-            <img src={$property.urlImage} alt={$property.nameProperty}>
-            </div>            
-            <div class="descSelect">
-            <h4> {$property.claveEB} {$property.nameProperty}</h4>
-            <h5>{$property.selecTP} en Col. {$property.colonia} al {$property.locaProperty} de la ciudad.</h5>
-            <h6>Precio: {$property.price}</h6>
-            <div>
-               <h6>{$property.beds} Recamaras, {$property.bathroom} Baños y {$property.halfBathroom} Medio Baño</h6>
-               
-            </div>
-               <h6>{$property.areaBuilding} m2 de construcción y {$property.areaTotal} m2 de terreno</h6>
-               <!-- <h6>{property.areaTotal} m2 de terreno</h6>               -->
-               <p class="descSelec">{$property.description}</p>
-            </div>
+         <div class="sele__Product">   
+            <div class="sele__info">              
+               <div class="selectImage">
+               <img src={$property.urlImage} alt={$property.nameProperty}>
+               </div>            
+               <div class="descSelect">
+               <h4> {$property.claveEB} {$property.nameProperty}</h4>
+               <h5>{$property.selecTP} en Col. {$property.colonia} al {$property.locaProperty} de la ciudad.</h5>
+               <h6>Precio: {$property.price}</h6>
+               <div>
+                  <h6>{$property.beds} Recamaras, {$property.bathroom} Baños y {$property.halfBathroom} Medio Baño</h6>
+                  
+               </div>
+                  <h6>{$property.areaBuilding} m2 de construcción y {$property.areaTotal} m2 de terreno</h6>
+                  <!-- <h6>{property.areaTotal} m2 de terreno</h6>               -->
+                  <p class="descSelec">{$property.description}</p>
+               </div>
    <!-- Botones -->
-            <div class="folowLink">
-               <!-- svelte-ignore security-anchor-rel-noreferrer -->
-               <a href={$property.urlProp} target='_blank'>Seguir Link en Otra Ventana</a>        
-            </div>
-            <div class="optionsSend" >
+               <div class="folowLink">
+                  <!-- svelte-ignore security-anchor-rel-noreferrer -->
+                  <a href={$property.urlProp} target='_blank'>Seguir Link en Otra Ventana</a>        
+               </div>
+               <div class="optionsSend" >
 
    <!-- Buscar interesados -->
-               <button class="btnCommon btnWhatsApp" on:click={() => checkedTCont(checkedContacts, $property)}>Enviar por WhatsApp</button>
-               <button class="btnCommon" on:click={findCustomers}>Buscar Interesados</button>
-            </div>
+                  <button class="btnCommon btnWhatsApp" on:click={() => checkedTCont(checkedContacts, $property)}>Enviar por WhatsApp</button>
+                  <button class="btnCommon" on:click={findCustomers}>Buscar Interesados</button>
+               </div>
    <!-- resto -->
-            <div class="backAnt">
-               <button class="btnCommon btnCancel" on:click={onCancel}>Regresar</button>
-            </div>
+               <div class="backAnt">
+                  <button class="btnCommon btnCancel" on:click={onCancel}>Regresar</button>
+               </div>
    <!-- Material icons -->
-            <div>
-               <div class="iconContent">
-                  <i on:keydown = {editProperty} class="material-icons edit">edit</i>
-                  <!-- <i on:click={viewProperty} class="material-icons irLink"> pageview </i> -->
-                  <i on:keydown = {deleteProperty} class="material-icons delete" >delete_forever</i>
+               <div>
+                  <div class="iconContent">
+                     <!-- svelte-ignore a11y-click-events-have-key-events -->
+                     <i on:click = {editProperty} class="material-icons edit">edit</i>
+                     <!-- <i on:click={viewProperty} class="material-icons irLink"> pageview </i> -->
+                     <!-- svelte-ignore a11y-click-events-have-key-events -->
+                     <i on:click = {deleteProperty} class="material-icons delete" >delete_forever</i>
+                  </div>
                </div>
             </div>
-         </div>
+         </div> 
 
 
    <!-- Tarjeta de clientes interesados -->
@@ -119,9 +124,16 @@
 
  <style>
 
-    .selectProduct{
+    .sele__Product{
+      display: flex;
+      margin: 0 auto;
        width: 80%;
-       padding: 15px 15px;
+       /* padding: 15px 15px; */
+      }
+
+      .sele__info{
+         display: column;
+         margin: 0 auto;
       }
       
       .selectImage{

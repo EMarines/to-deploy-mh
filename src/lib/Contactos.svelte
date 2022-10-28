@@ -8,6 +8,10 @@
       import { dbContacts } from '../../firebase';
       import { conInterest, contact, proInterest, systStatus } from '../stores/stores';
       import AltaContacto from './AltaContacto.svelte';
+      import { expoInOut } from 'svelte/easing';
+      import { scale } from 'svelte/transition';
+
+
 
    // Declaraciónes
       let searchTerm;
@@ -63,9 +67,6 @@
             });
          })();
 
-
-         
-
 </script>
 
    <!-- Encabezado de Contactos e imagen -->   
@@ -80,19 +81,19 @@
             <button class="altaContacto" on:click={handAddContact}>Alta de Contacto</button>
 
             <Search bind:searchTerm on:input={searCont} /> 
-
+      
    <!-- Rederiza los contactos  -->
-            <div class="mosPag">   
-               <div>    
+            <div class="mosPag container cont__card">   
+               <main id="bookshelf">    
                   {#each toRender as item, i}
                      {#if i >= postRangeLow && i < postRangeHigh}
                         <!-- svelte-ignore a11y-click-events-have-key-events -->
-                        <div class="selecContact" on:click = {()=> selectContact(item)}>
+                        <div class="selecContact" on:click = {()=> selectContact(item)} transition:scale={{duration: 500, easing: expoInOut}}>
                            <ContactCard {...item} />
                         </div>
                      {/if}
                   {/each}
-               </div>
+               </main>
 
    <!-- Paginación del en Dom -->
                <div class = "container pagination">
@@ -156,12 +157,10 @@
 
 <style>
    img{
-      max-width: 148px;
+      max-width: 150px;
    }
 
-   .mosPag{
-      display: row;
-   }
+   
 
    .altaContacto{
       width: 350px;
@@ -173,13 +172,9 @@
       margin-bottom: 5px;
    }
 
-   .pagi__Item{
-      display: felx;
+   .cont__card{
+      width: 600px;
    }
-
-   .pagi__options{
-      display: flex;
-      justify-content: space-between;
-   }
+ 
 
 </style>
