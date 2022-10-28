@@ -2,7 +2,8 @@
   // importaciones 
     // @ts-ignore
     import { Router, Route, Link, navigate } from "svelte-navigator";
-    // import logoMH  from 'src/assets/images/logoMH.png'
+    import logoMH  from '../assets/images/logoMH.png'
+    import menu  from '../assets/images/menu.svg'
     import Home from './Home.svelte'
     import Contactos from './Contactos.svelte'
     import Propiedades from './Propiedades.svelte'
@@ -76,10 +77,10 @@
 
             <div class="nav__container">
 
-              <img src="src/assets/images/logoMH.png" alt="MatchHome" class="nav__logo"> 
+              <img src={logoMH} alt="MatchHome" class="nav__logo"> 
 
               <label class="nav__label" for="menu">
-                <img src="src/assets/images/menu.svg" class="nav__img" alt="menu">
+                <img src={menu} class="nav__img" alt="menu">
               </label>
               <input type="checkbox" id="menu" class="nav__input">
 
