@@ -56,8 +56,9 @@
 
 </script>
 
-   <body>
+   <!-- <body> -->
 
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div class="background" transition:fade on:click ={close}/>
          <div class="pop-up" transition:fly>         
             <div>
@@ -75,7 +76,7 @@
                <button class="btnShedule" on:click={close}>Cancelar</button>
             </div>
          </div>  
-      </body>  
+      <!-- </body>   -->
       <svelte:window on:keydown={keyIsPressed}/>
 
 <style>
@@ -88,26 +89,29 @@
       height: 100%;
       width: 100%;
       background-color: rgba(0, 0, 0, 0.8);
+      align-items: bottom;
       z-index: 2;
    }
 
    .pop-up {
         position: fixed;
+        top: 100px;
         height: auto;
-        width: 550px;
+        width: 450px;
         color: white;
         padding: 15px;
         background-color: #37474f;
         border: solid 5px;
+        /* flex-wrap: wrap; */
+        border-radius: 8px;
+        /* align-items: center; */
         z-index: 5;
-	    align-items: center;
-       border-radius: 8px;
     }
 
     
 	.inputTask {
       font-size: 25px;
-		width: 500px;
+		width: 350px;
       height: 50px;
       margin-bottom: 10px;
       border-radius: 8px;
@@ -116,7 +120,7 @@
     .inputDate {
         font-size: 30px;
         padding: 25px;
-        width: 300px;
+        width: 250px;
         height: 50px;
         margin-bottom: 10px;
         border-radius: 8px;

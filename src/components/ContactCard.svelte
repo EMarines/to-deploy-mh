@@ -25,8 +25,9 @@
 
 <style>
    .contact{
-      width: 35%;
-      min-width: 400px;
+      width: 90%;
+      max-width: 550px;
+      min-width: 280px;
    }
 
    .namePerson{

@@ -96,8 +96,8 @@
 
    <!-- Paginación del en Dom -->
                <div class = "container pagination">
-                  <ul>
-                  <!-- <div class="pagiItem"> -->
+                  <div class="pagi__Item">
+                     <ul class="pagi__options">
                      
                      {#if currentPage > 1}
                         <li><a href="/blog" on:click|preventDefault={() => setCurrentPage(1)}>first</a></li>
@@ -129,8 +129,8 @@
                            <li><a href="/blog/{currentPage + 1}" on:click|preventDefault={() => setCurrentPage(currentPage + 1)}>next</a></li>
                            <li><a href="/blog/{totalPages}" on:click|preventDefault={() => setCurrentPage(totalPages)}>last</li>
                         {/if}
-                 <!-- </div> -->
-                  </ul>      
+                     </ul>      
+                 </div>
                </div>
 
             </div>
@@ -160,7 +160,7 @@
    }
 
    .mosPag{
-      display: flex;
+      display: row;
    }
 
    .altaContacto{
@@ -171,6 +171,15 @@
 		border-radius: 5px;
       background-color: rgb(195, 232, 239);
       margin-bottom: 5px;
+   }
+
+   .pagi__Item{
+      display: felx;
+   }
+
+   .pagi__options{
+      display: flex;
+      justify-content: space-between;
    }
 
 </style>

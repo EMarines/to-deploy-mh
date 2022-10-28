@@ -70,10 +70,10 @@
           <i class="fas fa-bars"></i>
         </label> -->
    
+        <nav class="nav">
         <Router>
 
 
-          <nav class="nav">
             <div class="nav__container">
 
               <img src="src/assets/images/logoMH.png" alt="MatchHome" class="nav__logo"> 
@@ -95,7 +95,7 @@
                 <Link to="/about" on:click={logout}>LogOut</Link>
                 
                 <!-- {:else} -->
-                <!-- <Link to="about">About</Link> -->
+                <Link to="about">About</Link>
                 <Link to="register">Registro</Link>
                 <Link to="login">Login</Link>
               <!-- </div>      -->
@@ -105,7 +105,6 @@
                   <!-- <Link to="selectContact">SelectedContact</Link>       -->
              
               </div>
-            </nav>
 
            <Route path="/">
             <Home />
@@ -159,6 +158,8 @@
           
 
       </Router>
+    </nav>
+
       
         
 
@@ -167,6 +168,7 @@
 
 
 .nav{
+  width: 100%;
   background: #2ab712;
   height: 80px;
   color: #fff;
@@ -182,7 +184,7 @@
   height: 100%;
   width: 100%;
   margin: 0 auto;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
 

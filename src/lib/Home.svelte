@@ -29,8 +29,7 @@
 
 </script>
 
-<body>
-
+  <body>
   
   <!-- Router Menú -->
   
@@ -121,7 +120,7 @@
      </div>
 
 
-   </body>
+  </body>
 
 <style>
 
@@ -138,16 +137,6 @@
   padding-top: 5px;
 }
 
-/* .banner-img {
-    position: absolute;
-    height: 10rem;
-    width: 100%; */
-    /* background-image: url(https://images.unsplash.com/photo-1582727657635-c771002bdada?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ); */
-    /* background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain; */
-  /* }  */
-
   .profile-img {
     width: 8rem;
     clip-path: circle(70px at center);
@@ -159,6 +148,9 @@
     font-size: 1.5rem;
   }
 
-  
+  body{
+  width: 98%;
+  margin: 0 auto;
+}
 
 </style>
