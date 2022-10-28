@@ -99,6 +99,12 @@ body{
       margin-right: 50px;
     }
 
+    .icon__Content{
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+    }
+
 /* 
 a {
   font-weight: 500;

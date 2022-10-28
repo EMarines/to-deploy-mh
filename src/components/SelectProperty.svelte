@@ -8,6 +8,9 @@
       import { property, conInterest } from '../stores/stores'
       import { filtPropContInte } from '../assets/funcions/filContacts'
       import { systStatus } from '../stores/stores';
+      import trash from '../assets/images/trash.svg'
+      import edit from '../assets/images/edit.svg'
+
       import ContactCard from './CardProperty.svelte';
       import { claim_space } from 'svelte/internal';
       // import { filtPropContInte } from '../assets/funcions/rangValue'
@@ -56,6 +59,7 @@
 
       // onCancel
          function onCancel() {
+            // @ts-ignore
             $property = [];
             $systStatus="start"
          };
@@ -94,17 +98,15 @@
                <div class="backAnt">
                   <button class="btnCommon btnCancel" on:click={onCancel}>Regresar</button>
                </div>
-   <!-- Material icons -->
-               <div>
-                  <div class="iconContent">
+   <!-- Edit Delete Icons -->
+                  <div class="icon__Content">
                      <!-- svelte-ignore a11y-click-events-have-key-events -->
-                     <i on:click = {editProperty} class="material-icons edit">edit</i>
-                     <!-- <i on:click={viewProperty} class="material-icons irLink"> pageview </i> -->
+                     <img on:click = {editProperty} src={edit} alt="delete">
                      <!-- svelte-ignore a11y-click-events-have-key-events -->
-                     <i on:click = {deleteProperty} class="material-icons delete" >delete_forever</i>
+                     <img on:click = {deleteProperty} src={trash} alt="delete">
+                     <!-- <i on:click = {deleteProperty} class="material-icons delete" >delete_forever</i> -->
                   </div>
                </div>
-            </div>
          </div> 
 
 
@@ -146,4 +148,4 @@
          border: solid 2px;
          border-radius: 5px;
       }
- </style>
+ </style> 

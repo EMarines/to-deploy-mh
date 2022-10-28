@@ -16,6 +16,8 @@
     import AltaContacto from '../lib/AltaContacto.svelte';
     import { searchProperty } from '../assets/funcions/search'
     import { binnSave } from '../assets/funcions/itemSaver';
+    import trash from '../assets/images/trash.svg'
+    import edit from '../assets/images/edit.svg'
 
   // Declaraciones
     let mostImageProp = false;
@@ -196,8 +198,7 @@
           </div>
 
           <div>
-            <div>
-              <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+              <div>
                   <textarea on:keypress={seleTypeAction} class="texArea" cols="65" rows="5" bind:value = {commInpuyBinnacle} placeholder ="Ingresa un comentario"/> 
     <!-- Enviar WA o guardar nota para bitácora -->
                   <div>
@@ -206,15 +207,16 @@
                       <button class="btnCommon" on:click={saveNote}>Guardar Info</button>
                     <!-- {/if} -->
                 </div>
-
-    <!-- Iconos Editar y Borrar -->
               </div>
-                <div class="iconContent">
+
+    <!-- Edit Delete Icons -->
+                <div class="icon__Content">
                   <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <i on:click = {editContact} class="material-icons edit">edit</i>
+                  <img on:click = {editContact} src={edit} alt="delete">
                   <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <i on:click={deleteContact} class="material-icons delete">delete_forever</i>                               
-                </div> 
+                  <img on:click = {deleteContact} src={trash} alt="delete">
+                  <!-- <i on:click = {deleteProperty} class="material-icons delete" >delete_forever</i> -->
+              </div>
             </div>
           </div> 
 
