@@ -3,7 +3,7 @@
 
   // Importaciones
     import { db, dbContacts, dbProperties } from '../../firebase';
-    import { collection, deleteDoc, doc} from 'firebase/firestore';
+    import { collection, deleteDoc, doc, addDoc} from 'firebase/firestore';
     import Search from './Search.svelte';
     import AddToSchedule from './AddToSchedule.svelte';
     import CardProperty from './CardProperty.svelte';
@@ -15,9 +15,12 @@
     // import { binnSave } from '../assets/funcions/binnSaver'
     import AltaContacto from '../lib/AltaContacto.svelte';
     import { searchProperty } from '../assets/funcions/search'
-    import { binnSave } from '../assets/funcions/itemSaver';
+    import { binnSave } from '../assets/funcions/itemSaver';   // que es esto?
     import trash from '../assets/images/trash.svg'
-    import edit from '../assets/images/edit.svg'
+    import edit from '../assets/images/edit.svg';
+    import { useNavigate } from "svelte-navigator";
+ 
+    const navigate = useNavigate();
 
   // Declaraciones
     let mostImageProp = false;
@@ -111,11 +114,24 @@
           if(confirm("Deseas eleiminar definitivamente al contacto?")){
             // console.log("Borraste al contacto", $contact)
             await deleteDoc(doc(db, "contacts", $contact.id))
-            editStatus = false;
-            window.location.href = "/";
+            warnDeleteContact($contact)
+            navigate("/");
+            // editStatus = false;
+            // $contact = [];
+            //  window.location.href = "/";
+            // window.location.href = "/";    ********************************************************************
           }  
         };
 
+    // Agrega a Bitácora que se eliminó al contacto
+        async function warnDeleteContact($contact){
+          let commBinnacle = (`Se le eliminóa: ${$contact.name} ${$contact.lastname} del ${$contact.telephon}`)
+                  let binnInfo = {"date": Date.now(), "comment": commBinnacle}
+                  console.log($systStatus, binnInfo);
+
+                  const binnacleToAdd = collection(db, "binnacles")
+                  await addDoc(binnacleToAdd, binnInfo);
+        }
     // Cerrar Shedule                       
         function close(){
           isActivated = false;

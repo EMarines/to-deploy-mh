@@ -1,20 +1,25 @@
 <script>
+	import { binnacle } from './../stores/stores.js';
   // Importaciones
-    import { contact, systStatus,  } from '../stores/stores';
+    import { contact, systStatus } from '../stores/stores';
     import ContData from '../components/ContData.svelte';
+    import { db } from '../../firebase';
+    import { collection, addDoc, doc, updateDoc} from 'firebase/firestore';
+    import { binnSave } from '../assets/funcions/binnSaver'
+    import { now, subscribe } from 'svelte/internal';
     import PropData from '../components/PropData.svelte';
-    import { db, dbContacts } from '../../firebase';
-    import { collection, addDoc, deleteDoc, getDoc, getDocs, doc, updateDoc} from 'firebase/firestore';
-    import { now } from 'svelte/internal';
 
   // Decalraciones
     let editStatus = false;
     let createdAt;
-
+    let commBinnacle;
+    let noteBinnacle;
+    
     
   // Funciones
     // Edición o Alta de contacto
         async function handSubmit($contact) { 
+          console.log($systStatus);
           createdAt = Date.now()
           $contact = {
             ...$contact, createdAt
@@ -22,29 +27,35 @@
           if($systStatus != "contEditing"){
                const contToAdd = collection(db, "contacts")
                await addDoc(contToAdd, $contact);
+               $systStatus = "binnAdding"
+               infoToBinnacle($systStatus, $contact)
             } else {
                await updateDoc(doc(db, "contacts", $contact.id), $contact)
+               infoToBinnacle($systStatus, $contact)
                editStatus = false;
             }
             $contact = []; 
             $systStatus = "contSelect"
         };
 
-    // Añadir Contacto y Bitácora
-          export  function addContact (tarea) {  
+    // Añadir Información a Bitácora para Alta de Contacto
+          async function infoToBinnacle ($systStatus, $contact) {  
             try {
-              // commBinnacle = (`Se le agregó al contacto: ${contact.name} ${contact.lastname} del ${contact.telephon}`)
-              // noteBinnacle = {"date": Date.now(), "comment": commBinnacle}            
-               // @ts-ignore
-              //  database.contacts.add({contacto});
-               console.log("se dio de alta a: ")
-              const response =  collection(db, "todos")
-              addDoc(response, tarea)
-            
+              if($systStatus === "binnAdding"){
+                  let commBinnacle = (`Se le agregó a: ${$contact.name} ${$contact.lastname} del ${$contact.telephon}`)
+                  let binnInfo = {"date": Date.now(), "comment": commBinnacle}
+                  console.log($systStatus, binnInfo);
 
-              // saveBinnacle(noteBinnacle, contact);
-              // systStatus = "contSelect" 
-                                          
+                  const binnacleToAdd = collection(db, "binnacles")
+                  await addDoc(binnacleToAdd, binnInfo);
+              } else {
+                  let commBinnacle = (`Se le editó a: ${$contact.name} ${$contact.lastname} del ${$contact.telephon}`)
+                  let binnInfo = {"date": Date.now(), "comment": commBinnacle}
+                  console.log($systStatus, binnInfo);
+
+                  const binnacleToAdd = collection(db, "binnacles")
+                  await addDoc(binnacleToAdd, binnInfo);
+              }
             } catch (error) {
               console.log("error", error)
             }        

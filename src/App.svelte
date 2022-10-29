@@ -1,5 +1,6 @@
 <script>
   import Navbar from './lib/Navbar.svelte'
+  import logoMH from '../src/assets/images/logoMH.png'
 
   let showIntro = true;
 
@@ -16,8 +17,8 @@ setTimeout(()=>{
 <body>
   {#if showIntro}
     <div class="intro">
-      <h1 class="title">Bienvendo A:</h1>
-      <img src="src/assets/images/logoMH.png" alt="MatchHome">
+      <h1 class="title">Bienvendo a</h1>
+      <img src={logoMH} alt="MatchHome">
       <div class="">
         <p class="desc__intro">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod aut aliquam, expedita perferendis consequatur modi omnis! Nostrum iste necessitatibus quisquam numquam, aliquam ipsum. Sit, similique quis. Fuga vitae possimus quisquam quam. Unde accusantium neque veniam reprehenderit, laborum, magni ut quasi asperiores a amet fugiat non, sapiente obcaecati voluptas ab! Nostrum!</p>
         <p><strong> www.matchhome.net</strong></p>

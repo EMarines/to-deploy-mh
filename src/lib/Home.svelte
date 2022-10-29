@@ -111,12 +111,9 @@
     <div class="">
   <!--Schedule  -->
     <Schedule (orderTodos)/>
-
-
-
-
+    
 <!-- BITÁCORA -->
-         <!-- <Binnacle />  -->
+         <Binnacle /> 
      </div>
 
 
