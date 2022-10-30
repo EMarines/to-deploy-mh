@@ -15,12 +15,14 @@
          let nombre = (`${$contact.name} ${$contact.lastname}`)
          let tarea = [];
          let task = [];
-         let fechaVista= new Date(),
-         endTask = fechaVista.getTime();
-         console.log(endTask)
+         // let fechaVista= new Date();
+         let endTask;
+         let endTaskQ = 0;
+         // console.log(endTask)
 
          tarea = {
             task: "",
+            endTask: "",
             isComplete: "",
             createdAt: "",
             timeTask: "", 
@@ -37,13 +39,16 @@
       
       // Agrega la tarea
             const addTodo = async() => {
+               console.log("ests en addTodo");
                $systStatus= "todoAdding"
+               // endTask=(new Date(endTaskQ).getTime())
+               console.log(endTask);
                task = nombre;
-               tarea = {...tarea, endTask}
+               // tarea = {...tarea, endTask}
                $todo = {...tarea, task}
                binnSave($systStatus, $todo)
                console.log($todo)
-               close();
+               // close();
                // $todo = "";
             };
                  
@@ -69,7 +74,7 @@
                <input type="date" class="inputDate" bind:value = {tarea.endTask} /> 
             </div>
             <div>
-               <textarea name="notes"  cols="56" rows="5" bind:value = {tarea.notes} placeholder ="descripción"></textarea>
+               <textarea name="notes"  cols="40" rows="5" bind:value = {tarea.notes} placeholder ="descripción"></textarea>
             </div>         
             <div>
                <button class="btnShedule" on:click={addTodo}>Guardar</button>
@@ -97,7 +102,7 @@
         position: fixed;
         top: 100px;
         height: auto;
-        width: 450px;
+        width: 350px;
         color: white;
         padding: 15px;
         background-color: #37474f;
@@ -110,24 +115,24 @@
 
     
 	.inputTask {
-      font-size: 25px;
-		width: 350px;
+      font-size: 15px;
+		width: 200px;
       height: 50px;
       margin-bottom: 10px;
       border-radius: 8px;
 	}
 
     .inputDate {
-        font-size: 30px;
+        font-size: 15px;
         padding: 25px;
-        width: 250px;
+        width: 150px;
         height: 50px;
         margin-bottom: 10px;
         border-radius: 8px;
     }
 
     .btnShedule{
-      width: 150px;
+      width: 100px;
       height: 30px;
       border-radius: 8px;
       font-size: 20px;

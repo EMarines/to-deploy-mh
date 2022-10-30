@@ -29,7 +29,7 @@
 
 
     // console.log(credentials)
-    console.log("logged? ", $isLogged)
+    // console.log("logged? ", $isLogged)
     let isLoggedUser = false;
 
    isLogged.subscribe((data) => {
@@ -37,7 +37,7 @@
    });
 
    async function logout(){
-    console.log($isLogged)
+    // console.log($isLogged)
    }
 
   //     try {

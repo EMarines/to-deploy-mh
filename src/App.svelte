@@ -6,7 +6,6 @@
 
 setTimeout(()=>{
   showIntro = false
-  console.log("object");
 }, 1500)
 </script>
 

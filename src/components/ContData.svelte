@@ -14,6 +14,7 @@
       var allPropertiesName = [];
       let properties = dbProperties;
       let editDate = false;
+      let detaAdd = false;
       
    // Ponerle el nombre y clave como nombre de propiedad
       (() => {
@@ -27,6 +28,10 @@
    // Muestro u oculta el imput createdAt
       function mostInput(){
          editDate = true;
+      }
+
+      function detaAlta(){
+         detaAdd = true;
       }
 
 </script>
@@ -44,7 +49,7 @@
             </div>
 
 
-
+            
             <div class="contactInput">
                <input  class="dataInput" type="text" placeholder="Nombre" bind:value={$contact.name}  />
            
@@ -53,8 +58,9 @@
 
             <div class="contactInput">
                <input class="dataInput" type="tel" placeholder="teléfono" bind:value={$contact.telephon} />
-
-               <input class="dataInput" type="email" placeholder="email" bind:value={$contact.email} />
+               {#if detaAdd}
+                  <input class="dataInput" type="email" placeholder="email" bind:value={$contact.email} />
+               {/if}
             </div>
          </div>
 
@@ -69,7 +75,9 @@
             </select>
             
    <!-- Tope de Presupuesto -->
-            <input class=" dataInput" type="number" placeholder="Presupuesto"bind:value={$contact.budget}/>
+            {#if detaAdd}
+               <input class=" dataInput" type="number" placeholder="Presupuesto"bind:value={$contact.budget}/>
+            {/if}
          </div>
 
    <!-- Comentarios del contacto -->
@@ -80,12 +88,14 @@
          
 
    <!-- Tipo de Contacto -->
-            <select class="othersInput" bind:value={$contact.typeContact}>
-               <option disabled selected value="">Tipo de Contacto</option>
-                  {#each typeContacts as typeContact}
-                     <option type="checkbox" value={typeContact}>{typeContact}</option>
-                  {/each}
-            </select>
+            {#if detaAdd}
+               <select class="othersInput" bind:value={$contact.typeContact}>
+                  <option disabled selected value="">Tipo de Contacto</option>
+                     {#each typeContacts as typeContact}
+                        <option type="checkbox" value={typeContact}>{typeContact}</option>
+                     {/each}
+               </select>
+            
 
    <!-- Modo de Contacto -->
             <select class="othersInput" bind:value={$contact.selecMC}>
@@ -154,7 +164,9 @@
             <Ubication bind:ubication={$contact.locaProperty}/>
             <Tags bind:tag = {$contact.tagsProperty} />
          </div>
+      {/if}
 
+      <button class="btn__save" on:click={detaAlta}>Alta Detalles</button>
 <style>
 
    .othersInput{

@@ -2,89 +2,61 @@
 // @ts-nocheck
 
    // Importaciones
-      import { collection, addDoc, deleteDoc, getDoc, getDocs, doc, updateDoc, setDoc, getFirestore } from 'firebase/firestore'
+      import { collection, addDoc, deleteDoc,doc, updateDoc } from 'firebase/firestore'
       import schedule from '../assets/images/schedule.png';
       import { fly, fade } from 'svelte/transition';
-      import { todo } from '../stores/stores'
+      import { todo, toRender } from '../stores/stores'
       import { db, dbTodos } from '../../firebase'
       import { formatDate } from '../assets/funcions/sevralFunctions'
-      import { Link, useNavigate } from "svelte-navigator";
+      import { useNavigate } from "svelte-navigator";
+      import { sort } from '../assets/funcions/sort'
 
-      // import AddToSchedule from '../components/AddToSchedule.svelte';
-      // import { id } from '../stores/stores'
-     
    // Declaraciones
       const navigate = useNavigate();
-      let error = "";
-      let showShedule = false;
-      let editStatus = false; 
-      let toRender = [];
 
-      $: renderizar = dbTodos;
-   
-   // Funciones 
-      // Ordena dbTodos por fecha
-         (() => {
-            return toRender = dbTodos.sort((a, b) => {
-               if(a.endTask < b.endTask){
-                  return 1;
-               }
-               if(a.endTask > b.endTask){
-                  return -1;
-               }
-               return 0
-            });
-         })();
+      let error = "";
+      let editStatus = false;
+      let showShedule = false;
+
+      $toRender = dbTodos
 
       // Manejo de Agregar o Editar
          async function handTodos() {
-            console.log(editStatus);
             if(!editStatus){
                const todoToAdd = collection(db, "todos")
                await addDoc(todoToAdd, $todo);
-               console.log(editStatus);
             } else {
                await updateDoc(doc(db, "todos", $todo.id), $todo)
                editStatus = false;
-               console.log(editStatus);               
             };
-            $todo = []; 
-            navigate("/")
+            editStatus = false;
+            $todo = {}; 
+            $toRender=dbTodos
+            navigate("/");
          };
-   
-      // Agrega Todo
-         // async function addTodo(){
-         //    console.log($todo)
-         //    const todoToAdd = collection(db, "todos")
-         //    await addDoc(todoToAdd, $todo);
-         //    // $todo=[];
-         // };
 
       // Elimina la tarea
-         async function deleteTodo(id) {
-            let confDelete = confirm("Quieres borrarlo definitivmente?")
+         async function deleteTodo(id) {            
+            editStatus = true;
+            let confDelete = confirm("Quieres borrarlo definitivmente?");
+            navigate("/");
             if(confDelete == true){
-               console.log(id)
                await deleteDoc(doc(db, "todos", id))           
+               navigate("/")
             };
-            // taskForm.reset();   // Borra el form por su id
+            // editStatus = false;
          };
 
       // Edita la tarea
          async function editTodo(item) {
             $todo = item
-            console.log($todo)
             editStatus = true;
-            showShedule = true;
-            // $todo = (await getDoc(doc(db, "todos", id))).data()
-            // taskForm['btn-task-save'].innerText = "Update"
+            // showShedule = true;
          };
 
       // Marcar completada la tarea
          function markTodoAsComplete() {
-
          };
-
 
       // Close
          function close() {
@@ -92,15 +64,16 @@
             navigate("/contactos")
          };
 
-       
+      // Ordena por fecha (endTask) sort
+         sort($toRender);
+    
 </script>
 
-<!-- <button on:click={getData}>click</button> -->
-   <div class="container">
-      <h1>Agenda</h1>
-      <img src={schedule} alt="schedule" class="imgTitle">
+   <!-- <button on:click={getData}>click</button> -->
+      <div class="container">
+         <h1>Agenda</h1>
+         <img src={schedule} alt="schedule" class="imgTitle">
 
-      <!-- <form id="taskForm"> -->
          <div class="container">      
             <div class="background" transition:fade on:keydown ={close}/>
                <div class="pop-up" transition:fly>         
@@ -120,15 +93,14 @@
                      <button on:click={close}>Cancelar</button>
                   </div>
                </div>   
-         </div>
-      <!-- </form> -->
+            </div>
 
-<!-- Agrega listado de tareas -->
+   <!-- Agrega listado de tareas -->
       <div class= "container">     
          {#if !editStatus}
             <h3>Tareas</h3>
                <ol>
-                  {#each renderizar as item}
+                  {#each $toRender as item}
                      {#if !item.timeTask}
                         <div>
                            <li class="schedule" class:complete={item.isComplete}>
@@ -156,7 +128,7 @@
    <!-- Agrega citas -->
          <h3>Agenda</h3>
             <ol>
-               {#each renderizar as item}            
+               {#each $toRender as item}            
                   {#if item.timeTask}
                      <div  on:dblclick={() => editTodo}>
                            <li class="schedule" class:complete={item.isComplete}>

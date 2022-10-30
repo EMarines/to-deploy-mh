@@ -12,7 +12,7 @@ export const conInterest = writable([]);
 
 export const searchTermG = writable("start");
 
-export const dbTodos = writable([])
+export const toRender = writable([])
 
 // export const id = writable();
 

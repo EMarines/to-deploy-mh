@@ -16,16 +16,7 @@
   import schedule from '../assets/images/schedule.png';
   import team from '../assets/images/team.png';
   import { isAuth } from '../store/isLogged'
-  import { dbContacts, dbProperties, dbTodos } from '../../firebase'
-
-  // let fecha;
-  // let todos= [];
-
-  // let ordeBinnacle= db.binnacle
-  // let orderContacts = db.contactos
-  // let orderTodos = db.todo
-
-  // console.log(dbContacts)
+  // import { dbContacts, dbProperties, dbTodos } from '../../firebase'
 
 </script>
 
@@ -86,14 +77,14 @@
         <Propiedades />
       </Route> -->
 
-      <Route path="/agenda">
+      <!-- <Route path="/agenda">
         <Agenda />
-      </Route>
+      </Route> -->
 
       <!-- <Route path="/propiedades">
         <Propiedades />
       </Route> -->
-
+<!-- 
       <Route path="/sinergias">
         <Sinergias />
       </Route>
@@ -104,7 +95,7 @@
 
       <Route path="/registro">
         <Registro />
-      </Route>
+      </Route> -->
 
     </div>
 

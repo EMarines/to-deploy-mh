@@ -1,15 +1,13 @@
 // Acomoda por orden decendente lista. "object" es la objeto a ordenar,
-//  "toSort" es el elemento de cada objeto a ordenar
+//  "toSort" es el elemento con el cual se va a ordenar
 
-// ----    NO FUNCIONÓOOOOO -------
-
-let toSort;
-   
-export function sort(object, toSort){
+  
+export function sort(object){
+    // console.log("Estas en la funcion", object);
    object.sort((a, b) => {
-      if(a.toSort < b.toSort){
+      if(new Date(a.endTask) < new Date(b.endTask)){
           return 1;
-      } else if (a.toSort > b.toSort){
+      } else if (new Date(a.endTask) > new Date(b.endTask)){
           return -1;
       } else {
           return 0;

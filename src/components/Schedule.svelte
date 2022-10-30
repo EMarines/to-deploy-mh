@@ -1,9 +1,9 @@
 <script>
    import { formatDate, formatHour, formatDay } from '../assets/funcions/sevralFunctions';
    import { dbTodos } from '../../firebase'; 
-  //  import { db } from '../assets/db';
+   import { toRender } from '../stores/stores';
 
-  const toRender = dbTodos;
+  $toRender = dbTodos;
  
 </script>
 
@@ -15,7 +15,7 @@
        <h1 class="title">Agenda</h1> 
 
        <h3 class="subtitle">Tareas</h3>
-          {#each toRender as item}
+          {#each $toRender as item}
             <!-- {#if new Date(item.endTask) <= new Date()} -->
               {#if !item.timeTask}
                 <ul>
@@ -32,7 +32,7 @@
           {/each}
 
         <h3 class="subtitle">Citas</h3>
-          {#each toRender as item}
+          {#each $toRender as item}
             <!-- {#if new Date(item.endTask) <= new Date()} -->
               {#if item.timeTask}
                 <ul>
