@@ -3,7 +3,7 @@
       import house from '../assets/images/house.png';
       import Search from '../components/Search.svelte';
       import CardProperty from '../components/CardProperty.svelte';
-      import { property, systStatus, proInterest } from '../stores/stores'
+      import { property, systStatus } from '../stores/stores'
       import { searchProperty } from '../assets/funcions/search'
       import { scale } from 'svelte/transition';
       import { expoInOut } from 'svelte/easing';
@@ -23,7 +23,7 @@
    //Pagination
       let currentPage = 1; // Update this to simulate page change.
       let postsPerPage = 20;
-      let toRender = dbProperties;
+      $: toRender = dbProperties;
       $: totalPosts = toRender.length;
       $: totalPages = Math.ceil(totalPosts / postsPerPage);
       $: postRangeHigh = currentPage * postsPerPage;
@@ -33,7 +33,6 @@
          currentPage = newPage;
       }
 
-      toRender = dbProperties;
 
    // Funciones
       // Propiedad Seleccionada
@@ -60,10 +59,10 @@
       // Ordena dbProperties por fecha de publicación
             (() => {
             return toRender = dbProperties.sort((a, b) => {
-               if(a.createdAt < b.createdAt){
+               if(new Date(a.createdAt) < new Date(b.createdAt)){
                   return 1;
                }
-               if(a.createdAt > b.createdAt){
+               if(new Date(a.createdAt) > new Date(b.createdAt)){
                   return -1;
                }
                return 0

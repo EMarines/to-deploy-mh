@@ -3,7 +3,7 @@
    import { dbTodos } from '../../firebase'; 
    import { toRender } from '../stores/stores';
 
-  $toRender = dbTodos;
+  // $toRender = dbTodos;
  
 </script>
 

@@ -57,10 +57,10 @@
       // Ordena dbContacts por fecha
          (() => {
             return toRender = dbContacts.sort((a, b) => {
-               if(a.createdAt < b.createdAt){
+               if(new Date(a.createdA) < new Date(b.createdAt)){
                   return 1;
                }
-               if(a.createdAt > b.createdAt){
+               if(new Date(a.createdAt) > new Date(b.createdAt)){
                   return -1;
                }
                return 0

@@ -19,7 +19,7 @@ let fecha;
           fecha = new Date(fecha);
           // console.log("number", fecha)
         }
-          let dia = fecha.getDate()+1;
+          let dia = fecha.getDate();
           if(dia < 10){
             dia = '0' + dia
           }

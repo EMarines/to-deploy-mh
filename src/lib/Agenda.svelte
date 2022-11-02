@@ -2,71 +2,85 @@
 // @ts-nocheck
 
    // Importaciones
-      import { collection, addDoc, deleteDoc,doc, updateDoc } from 'firebase/firestore'
+      import { collection, addDoc, deleteDoc, doc, updateDoc, getDoc } from 'firebase/firestore'
+      import { db, onGetTask, dbTodos } from '../../firebase';
       import schedule from '../assets/images/schedule.png';
       import { fly, fade } from 'svelte/transition';
       import { todo, toRender } from '../stores/stores'
-      import { db, dbTodos } from '../../firebase'
       import { formatDate } from '../assets/funcions/sevralFunctions'
       import { useNavigate } from "svelte-navigator";
       import { sort } from '../assets/funcions/sort'
 
    // Declaraciones
       const navigate = useNavigate();
-
+      
       let error = "";
       let editStatus = false;
-      let showShedule = false;
+      let modeCrud = "addItem"
+      $toRender = dbTodos;
 
-      $toRender = dbTodos
+   // Renderiza el listado al editar
+         (async() => {
+            onGetTask((querySnapshot) => {
+                  $toRender
+               })
+         })();
 
-      // Manejo de Agregar o Editar
+
+   // Manejo de Agregar o Editar
          async function handTodos() {
-            if(!editStatus){
-               const todoToAdd = collection(db, "todos")
-               await addDoc(todoToAdd, $todo);
-            } else {
-               await updateDoc(doc(db, "todos", $todo.id), $todo)
-               editStatus = false;
+            if(modeCrud === "deleItem"){
+               let confDelete = confirm("Quieres borrarlo definitivmente?");
+                  if(confDelete == true){
+                     await deleteDoc(doc(db, "todos", $todo.id));
             };
+            } else if(modeCrud === "editItem") {
+               await updateDoc(doc(db, "todos", $todo.id), $todo)
+            } else {
+               await addDoc(collection(db, "todos"), $todo);
+            }
             editStatus = false;
             $todo = {}; 
-            $toRender=dbTodos
-            navigate("/");
+            // navigate("/");
          };
 
-      // Elimina la tarea
-         async function deleteTodo(id) {            
+   // Edita la tarea
+         async function editTodo(item) { 
+            $todo=item
+            modeCrud = "editItem"
             editStatus = true;
-            let confDelete = confirm("Quieres borrarlo definitivmente?");
-            navigate("/");
-            if(confDelete == true){
-               await deleteDoc(doc(db, "todos", id))           
-               navigate("/")
-            };
-            // editStatus = false;
          };
 
-      // Edita la tarea
-         async function editTodo(item) {
-            $todo = item
+   // Elimina la tarea
+         async function deleteTodo() { 
             editStatus = true;
-            // showShedule = true;
+            modeCrud="deleItem"
+            handTodos()
          };
 
-      // Marcar completada la tarea
+   // Ocultar agenda al empezar a escribir
+      // Al escribir en task
+         function typeTask(){
+            if($todo.task.length > 0){
+               editStatus=true;
+            }
+         };
+
+   // Marcar completada la tarea
          function markTodoAsComplete() {
          };
 
-      // Close
+
+
+   // Close
          function close() {
             $todo=[]; 
             navigate("/contactos")
          };
 
-      // Ordena por fecha (endTask) sort
+   // Ordena por fecha (endTask) sort
          sort($toRender);
-    
+
 </script>
 
    <!-- <button on:click={getData}>click</button> -->
@@ -78,7 +92,7 @@
             <div class="background" transition:fade on:keydown ={close}/>
                <div class="pop-up" transition:fly>         
                   <div>
-                     <input type="text" class="inputTask" cols="56" rows="1"  placeholder = "Agrega una Tarea o Cita" bind:value = {$todo.task} />
+                     <input type="text" class="inputTask" cols="56" rows="1"  placeholder = "Agrega una Tarea o Cita" bind:value = {$todo.task} on:input={typeTask}/>
                   </div>
                   <div class="contDate">
                      <input type="time"class="inputDate" bind:value = {$todo.timeTask} />
@@ -91,6 +105,9 @@
                      <!-- <button id="btn-task-save" on:click={handTodos}>Guardar</button> -->
                      <button on:click={handTodos} >{#if !editStatus}Guardar{:else} Editar{/if}</button>
                      <button on:click={close}>Cancelar</button>
+                     {#if editStatus}
+                        <button on:click={deleteTodo}>Borrar</button>
+                     {/if}
                   </div>
                </div>   
             </div>
@@ -106,7 +123,7 @@
                            <li class="schedule" class:complete={item.isComplete}>
                               <span>
                                  <button on:click={ () => markTodoAsComplete(item.id) }>✔</button>
-                                 <button on:click={ () => deleteTodo(item.id) }>✖</button>
+                                 <!-- <button on:click={ () => deleteTodo(item) }>✖</button> -->
                                  <button on:click={ () => editTodo(item)}>✔✖</button>                  
                               </span>
                               <spam>

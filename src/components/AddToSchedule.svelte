@@ -65,14 +65,14 @@
 
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div class="background" transition:fade on:click ={close}/>
-         <div class="pop-up" transition:fly>         
+         <div class="pop__up" transition:fly>         
             <div>
                <input type="text" class="inputTask"  placeholder = "Agrega una Tarea o Cita" bind:value = {nombre} />
             </div>
-            <div class="contDate">
+            <!-- <div class="contDate"> -->
                <input type="time"class="inputDate" bind:value = {tarea.timeTask} />
                <input type="date" class="inputDate" bind:value = {tarea.endTask} /> 
-            </div>
+            <!-- </div> -->
             <div>
                <textarea name="notes"  cols="40" rows="5" bind:value = {tarea.notes} placeholder ="descripción"></textarea>
             </div>         
@@ -98,7 +98,7 @@
       z-index: 2;
    }
 
-   .pop-up {
+   .pop__up {
         position: fixed;
         top: 100px;
         height: auto;
@@ -115,18 +115,21 @@
 
     
 	.inputTask {
-      font-size: 15px;
-		width: 200px;
-      height: 50px;
+      font-size: 20px;
+      font-weight: bold;
+		width: 300px;
+      height: 40px;
       margin-bottom: 10px;
       border-radius: 8px;
 	}
 
     .inputDate {
-        font-size: 15px;
+        font-size: 20px;
+        letter-spacing: .4em;
+        font-weight: bold;
         padding: 25px;
-        width: 150px;
-        height: 50px;
+        width: 300px;
+        height: 40px;
         margin-bottom: 10px;
         border-radius: 8px;
     }

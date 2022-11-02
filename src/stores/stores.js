@@ -79,7 +79,8 @@ export const contact = writable({
       endTask: "",
       timeTask: "", 
       notes: "",
-      user: ""        
+      user: "" ,
+      id:""       
    });
 
 // Users
