@@ -92,7 +92,9 @@ export const contact = writable({
    });
 
 // Binnacle
-   export const binnacle = {
+   export const binnacle = writable({
       date: "",
-      commBinnacle: ""
-   };
+      commBinnacle: "",
+      action: "",
+      to: ""
+   });

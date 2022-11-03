@@ -10,6 +10,9 @@
       import { formatDate } from '../assets/funcions/sevralFunctions'
       import { useNavigate } from "svelte-navigator";
       import { sort } from '../assets/funcions/sort'
+      import edit from '../assets/images/edit.svg'
+      import calendar_check from '../assets/images/calendar_check.svg'
+
 
    // Declaraciones
       const navigate = useNavigate();
@@ -104,6 +107,7 @@
                   <div>
                      <!-- <button id="btn-task-save" on:click={handTodos}>Guardar</button> -->
                      <button on:click={handTodos} >{#if !editStatus}Guardar{:else} Editar{/if}</button>
+                     <!-- <img src="" alt=""> -->
                      <button on:click={close}>Cancelar</button>
                      {#if editStatus}
                         <button on:click={deleteTodo}>Borrar</button>
@@ -122,9 +126,13 @@
                         <div>
                            <li class="schedule" class:complete={item.isComplete}>
                               <span>
-                                 <button on:click={ () => markTodoAsComplete(item.id) }>✔</button>
+                                 <!-- <button on:click={ () => markTodoAsComplete(item.id) }>✔</button> -->
                                  <!-- <button on:click={ () => deleteTodo(item) }>✖</button> -->
-                                 <button on:click={ () => editTodo(item)}>✔✖</button>                  
+                                 <!-- <button on:click={ () => editTodo(item)}>✔✖</button>  -->
+                                 <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                 <img on:click={()=>editTodo(item)}  src={edit} alt="edit" class="iconIMH">
+                                 <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                 <img on:click={()=>markTodoAsComplete(item)}  src={calendar_check} alt="complete" class="iconIMH">
                               </span>
                               <spam>
                                  {formatDate(item.endTask)} -*-
@@ -150,9 +158,12 @@
                      <div  on:dblclick={() => editTodo}>
                            <li class="schedule" class:complete={item.isComplete}>
                               <span>
-                                 <button on:click={ () => markTodoAsComplete(item.id) }>✔</button>
-                                 <button on:click={ () => deleteTodo(item.id) }>✖</button>
-                                 <button on:click={ () => editTodo(item) } >✔✖</button>
+                                 <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                 <img on:click={()=>editTodo(item)}  src={edit} alt="edit" class="iconIMH">
+                                 <!-- <button on:click={ () => editTodo(item) } >✔✖</button> -->
+                                 <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                 <img on:click={()=>markTodoAsComplete(item)}  src={calendar_check} alt="complete" class="iconIMH">
+                                 <!-- <button on:click={ () => markTodoAsComplete(item.id) }>✔</button> -->
                               </span>
                               <spam>
                                  {item.timeTask} -*-
@@ -191,7 +202,11 @@
          max-width: 148px;
       }
 
-
+      .iconIMH{
+         width: 30px;
+         height: 30px;
+      }
       
+   
 
 </style>

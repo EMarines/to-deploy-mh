@@ -1,24 +1,26 @@
 <script>
+	// import { property } from './../stores/stores.js';
+// @ts-nocheck
+
   // @ts-nocheck
 
   // Importaciones
-    import { db, dbContacts, dbProperties } from '../../firebase';
+    import { db, dbContacts, dbProperties, dbBinnacle } from '../../firebase';
     import { collection, deleteDoc, doc, addDoc} from 'firebase/firestore';
     import Search from './Search.svelte';
     import AddToSchedule from './AddToSchedule.svelte';
     import CardProperty from './CardProperty.svelte';
-    import { contact, systStatus, proInterest, property } from '../stores/stores.js';
+    import { contact, systStatus, proInterest, property, binnacle } from '../stores/stores.js';
     import { filtContPropInte } from '../assets/funcions/filProperties'
     import { formatDate} from '../assets/funcions/sevralFunctions';
     import { scale } from 'svelte/transition';
     import { expoInOut } from 'svelte/easing';
-    // import { binnSave } from '../assets/funcions/binnSaver'
-    import AltaContacto from '../lib/AltaContacto.svelte';
-    import { searchProperty } from '../assets/funcions/search'
-    import { binnSave } from '../assets/funcions/itemSaver';   // que es esto?
+    import { binnSave } from '../assets/funcions/binnSaver';
     import trash from '../assets/images/trash.svg'
     import edit from '../assets/images/edit.svg';
     import { useNavigate } from "svelte-navigator";
+    import AltaContacto from '../lib/AltaContacto.svelte';
+    import { searchProperty } from '../assets/funcions/search'
  
     const navigate = useNavigate();
 
@@ -39,6 +41,9 @@
     let proInt = [];
     let listToRender = [];
     let showAltCont = false;
+    let bitacora = [];
+    let date = [];
+    let comment = [];
 
     console.log($systStatus)
 
@@ -97,13 +102,6 @@
           $systStatus = "start";
       };
 
-    // Muestra botones WhatsApp y Guardar Info
-    
-        function seleTypeAction (){
-          mostButtons = true;
-          mostPoperties = false;
-        }
-
     // Edit Contact
         function editContact() {
           $systStatus = "contEditing"
@@ -143,21 +141,39 @@
         };
 
         function sendWA(){
-          console.log(contCheck)
-          // text = contCheck;
-          // copyToPaste(contCheck)
           let link = (`https://api.whatsapp.com/send?phone=52${$contact.telephon}&text=${contCheck}`)
           window.open(link);
-          binnSave()
+          sendProperty(contCheck)
         };
-    
-    // Guarda la nota
+    // Muestra botones WhatsApp y Guardar Info    
+        function seleTypeAction (){
+            mostButtons = true;
+            mostPoperties = false;
+          }
+          
+    // Guarda en bitácora la nota
         function saveNote(){
-          console.log(contCheck)
+          $systStatus = "binnAdding"
+          $binnacle = {"date": Date.now(), "comment": commInpuyBinnacle, "to": $contact.telephon, "action": "Nota agregada: "}
+          binnSave($systStatus, $binnacle )
+          $systStatus === "contSelect"
         };
 
+    // Guarda en bitácora la propiedad enviada
+        function sendProperty(contCheck){
+          $systStatus = "binnAdding"
+          let propertyL = dbProperties.filter((item) => item.urlProp === contCheck[0])
+          $property = propertyL[0]
+          $binnacle = {"date": Date.now(), "comment": $property.claveEB, "to": $contact.telephon, "action": "Propiedad enviada: "}
+          binnSave($systStatus, $binnacle )
+          $systStatus === "contSelect"
+        };
 
- 
+    // Busca la bitácora
+      (() =>{
+        bitacora = dbBinnacle.filter(item => item.to === $contact.telephon)
+      })();
+        
 </script>
 
     <!-- Datos personales del contacto -->
@@ -220,9 +236,15 @@
                   <div>
                     <!-- {#if commInpuyBinnacle || checkedProperty.length >= 1 } -->
                       <button  class="btnCommon btnWhatsApp" on:click={sendWA}>Enviar WhatsApp</button>
-                      <button class="btnCommon" on:click={saveNote}>Guardar Info</button>
+                      <button class="btnCommon" on:click={()=>saveNote($systStatus, commInpuyBinnacle)}>Guardar Info</button>
                     <!-- {/if} -->
                 </div>
+              </div>
+
+              <div>
+                {#each bitacora as item}
+                  <h1>{formatDate(item.date)} {item.action} {item.comment}</h1>
+                {/each}
               </div>
 
     <!-- Edit Delete Icons -->
@@ -242,11 +264,11 @@
                 <main id="bookshelf">
                   <h3>Propiedades encontradas: {$proInterest.length}</h3>
                                    
-                  {#each $proInterest as item}
+                  {#each $proInterest as $property}
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <section class = "property" on:click={selectProduct} transition:scale={{duration: 500, easing: expoInOut}}>                  
-                      <input type="checkbox" value={item.urlProp} class="form-check" bind:group={contCheck}/>	
-                      <CardProperty {...item} />
+                      <input type="checkbox" value={$property.urlProp} class="form-check" bind:group={contCheck}/>	
+                      <CardProperty {...$property} />
                     </section>
                   {/each}
                   {#if $proInterest.length === 0}
