@@ -241,11 +241,7 @@
                 </div>
               </div>
 
-              <div>
-                {#each bitacora as item}
-                  <h1>{formatDate(item.date)} {item.action} {item.comment}</h1>
-                {/each}
-              </div>
+ 
 
     <!-- Edit Delete Icons -->
                 <div class="icon__Content">
@@ -255,6 +251,13 @@
                   <img on:click = {deleteContact} src={trash} alt="delete">
                   <!-- <i on:click = {deleteProperty} class="material-icons delete" >delete_forever</i> -->
               </div>
+            </div>
+
+    <!-- Muesttra la bitácora -->
+            <div>
+              {#each bitacora as item}
+                <h4>{formatDate(item.date)} {item.action} {item.comment}</h4>
+              {/each}
             </div>
           </div> 
 
