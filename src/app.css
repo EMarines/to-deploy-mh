@@ -28,7 +28,7 @@
 }
 
 body{
-  width: 98%;
+  width: 99%;
   margin: 0 auto;
 }
 
@@ -42,7 +42,7 @@ body{
   text-align: center;
   border-radius: .5rem;
   position: relative;
-  margin: 1em auto;
+  margin: .75em auto;
   align-items: center;
 }
 

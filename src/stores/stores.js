@@ -14,7 +14,7 @@ export const searchTermG = writable("start");
 
 export const toRender = writable([])
 
-// export const id = writable();
+export const modeAction = writable();
 
 export const contact = writable({
    typeContact: "",  // Tipo de contacto

@@ -19,7 +19,7 @@
    // Ponerle el nombre y clave como nombre de propiedad
       (() => {
          for(let eachProperty of properties) {
-            let namProp =(`${eachProperty.nameProperty} ${eachProperty.claveEB} - ${(eachProperty.price/1000000).toFixed(2)}`)
+            let namProp =(`${eachProperty.nameProperty} - ${(eachProperty.price/1000000).toFixed(2)} (${eachProperty.claveEB.slice(-2)})`)
             allPropertiesName = [...allPropertiesName, namProp ]
          }  
          return allPropertiesName = allPropertiesName.sort();
@@ -88,24 +88,24 @@
          
 
    <!-- Tipo de Contacto -->
-            {#if detaAdd}
-               <select class="othersInput" bind:value={$contact.typeContact}>
-                  <option disabled selected value="">Tipo de Contacto</option>
-                     {#each typeContacts as typeContact}
-                        <option type="checkbox" value={typeContact}>{typeContact}</option>
-                     {/each}
-               </select>
-            
-
+         <select class="othersInput" bind:value={$contact.typeContact}>
+            <option disabled selected value="">Tipo de Contacto</option>
+            {#each typeContacts as typeContact}
+            <option type="checkbox" value={typeContact}>{typeContact}</option>
+            {/each}
+         </select>
+         
+         
    <!-- Modo de Contacto -->
-            <select class="othersInput" bind:value={$contact.selecMC}>
-               <option disabled selected value="">Modo de Contacto</option>
-               {#each modeContact as selecMC}
-               <option type="checkbox" value={selecMC}>{selecMC}</option>
-               {/each}
-            </select>
-
+         <select class="othersInput" bind:value={$contact.selecMC}>
+            <option disabled selected value="">Modo de Contacto</option>
+            {#each modeContact as selecMC}
+            <option type="checkbox" value={selecMC}>{selecMC}</option>
+            {/each}
+         </select>
+   
    <!-- Modo de Pago -->
+      {#if detaAdd}
             <select class="othersInput" bind:value={$contact.modePay}>
                <option disabled selected value="">Modo de Pago</option>
                {#each modePays as modeP}

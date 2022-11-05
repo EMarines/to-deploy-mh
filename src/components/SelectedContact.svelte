@@ -1,8 +1,5 @@
 <script>
-	// import { property } from './../stores/stores.js';
 // @ts-nocheck
-
-  // @ts-nocheck
 
   // Importaciones
     import { db, dbContacts, dbProperties, dbBinnacle } from '../../firebase';
@@ -10,7 +7,7 @@
     import Search from './Search.svelte';
     import AddToSchedule from './AddToSchedule.svelte';
     import CardProperty from './CardProperty.svelte';
-    import { contact, systStatus, proInterest, property, binnacle } from '../stores/stores.js';
+    import { contact, systStatus, proInterest, property, binnacle, modeAction } from '../stores/stores.js';
     import { filtContPropInte } from '../assets/funcions/filProperties'
     import { formatDate} from '../assets/funcions/sevralFunctions';
     import { scale } from 'svelte/transition';
@@ -141,6 +138,10 @@
         };
 
         function sendWA(){
+          if(commInpuyBinnacle.length > 0){
+            contCheck = commInpuyBinnacle
+            $modeAction = "sendMsg"
+          }
           let link = (`https://api.whatsapp.com/send?phone=52${$contact.telephon}&text=${contCheck}`)
           window.open(link);
           sendProperty(contCheck)
@@ -161,12 +162,18 @@
 
     // Guarda en bitácora la propiedad enviada
         function sendProperty(contCheck){
+          console.log($modeAction);
           $systStatus = "binnAdding"
           let propertyL = dbProperties.filter((item) => item.urlProp === contCheck[0])
           $property = propertyL[0]
-          $binnacle = {"date": Date.now(), "comment": $property.claveEB, "to": $contact.telephon, "action": "Propiedad enviada: "}
+          if($modeAction === "sendMsg"){
+            $binnacle = {"date": Date.now(), "comment": contCheck, "to": $contact.telephon, "action": "Mensaje enviado: "}
+          } else {
+            $binnacle = {"date": Date.now(), "comment": $property.claveEB, "to": $contact.telephon, "action": "Propiedad enviada: "}
+          }
           binnSave($systStatus, $binnacle )
           $systStatus === "contSelect"
+          $modeAction="";
         };
 
     // Busca la bitácora

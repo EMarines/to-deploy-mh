@@ -19,12 +19,12 @@
   // Funciones
     // Edición o Alta de contacto
         async function handSubmit($contact) { 
-          console.log($systStatus);
-          createdAt = Date.now()
-          $contact = {
-            ...$contact, createdAt
-          }     
+          // console.log($systStatus);
           if($systStatus != "contEditing"){
+            createdAt = Date.now()
+            $contact = {
+              ...$contact, createdAt
+            }     
                const contToAdd = collection(db, "contacts")
                await addDoc(contToAdd, $contact);
                $systStatus = "binnAdding"
@@ -60,20 +60,6 @@
               console.log("error", error)
             }        
           };
-
-    // Edita Contacto
-            //     const updateContact = async () => {
-            //   if (editingItem === "sendProperty") {
-            //     contact.sendedProperties.push(claEB)
-            //   } else {
-            //     commBinnacle = (`Se le editó a: ${contact.name} ${contact.lastname} del ${contact.telephon}`)
-            //     let binnacle = {"date": Date.now(), "comment": commBinnacle}                
-            //     saveBinnacle(binnacle);
-            //   }
-            //     await db.collection("contacts").doc(contact.telephon).update(contact);                
-            //     // editingItem = "";
-            //     // systStatus = "contSelect"; 
-            // };
 
     // Guardar bitácora
             const saveBinnacle = async (noteBinnacle) => {

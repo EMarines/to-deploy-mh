@@ -83,7 +83,7 @@
             <Search bind:searchTerm on:input={searCont} /> 
       
    <!-- Rederiza los contactos  -->
-            <div class="mosPag container cont__card">   
+            <div class="mosPag cont__card">   
                <main id="bookshelf">    
                   {#each toRender as item, i}
                      {#if i >= postRangeLow && i < postRangeHigh}
@@ -173,7 +173,8 @@
    }
 
    .cont__card{
-      width: 600px;
+      min-width: 350px;
+      max-width: 600px;
    }
  
 
