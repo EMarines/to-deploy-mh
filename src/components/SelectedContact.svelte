@@ -42,14 +42,11 @@
     let date = [];
     let comment = [];
 
-    console.log($systStatus)
-
   // Funciones
     // Muestra la imagen de propiedad cuendo el punero está sobre la clave
       function mouseOverProp(itemP) {
         mostImageProp = true;
         imgToShow = dbProperties.filter((e) => e.claveEB === (itemP))
-        // console.log("estas", imgToShow )
       };
     
     // Desaparece la imagen de la propiedad al salir de su area
@@ -138,7 +135,7 @@
         };
 
         function sendWA(){
-          if(commInpuyBinnacle.length > 0){
+          if(!!commInpuyBinnacle){
             contCheck = commInpuyBinnacle
             $modeAction = "sendMsg"
           }
@@ -162,7 +159,6 @@
 
     // Guarda en bitácora la propiedad enviada
         function sendProperty(contCheck){
-          console.log($modeAction);
           $systStatus = "binnAdding"
           let propertyL = dbProperties.filter((item) => item.urlProp === contCheck[0])
           $property = propertyL[0]
@@ -172,8 +168,8 @@
             $binnacle = {"date": Date.now(), "comment": $property.claveEB, "to": $contact.telephon, "action": "Propiedad enviada: "}
           }
           binnSave($systStatus, $binnacle )
-          $systStatus === "contSelect"
-          $modeAction="";
+          $modeAction = "";
+          $systStatus = "contSelect"
         };
 
     // Busca la bitácora
@@ -221,12 +217,12 @@
             <p>{$contact.comContact}</p>
     <!-- Botones -->
           <div>
-            <button class="btnCommon" on:click = {() => addSchedule($contact)}>Programar Evento</button>
+            <button class="btn__common" on:click = {() => addSchedule($contact)}>Programar Evento</button>
               {#if isActivated}
                 <AddToSchedule {...$contact} on:closeIt = {close} />
               {/if}
-              <button class="btnCommon" on:click = { () => fitProp($contact)}>Ver Propiedades de Interes</button>
-              <button class="btnCommon" on:click = {mostSearch}> Buscar Propiedad</button>
+              <button class="btn__common" on:click = { () => fitProp($contact)}>Ver Propiedades de Interes</button>
+              <button class="btn__common" on:click = {mostSearch}> Buscar Propiedad</button>
               {#if mosrBusq}
                 <Search bind:searchTerm on:input={searProp} />
               {/if}
@@ -242,8 +238,8 @@
     <!-- Enviar WA o guardar nota para bitácora -->
                   <div>
                     <!-- {#if commInpuyBinnacle || checkedProperty.length >= 1 } -->
-                      <button  class="btnCommon btnWhatsApp" on:click={sendWA}>Enviar WhatsApp</button>
-                      <button class="btnCommon" on:click={()=>saveNote($systStatus, commInpuyBinnacle)}>Guardar Info</button>
+                      <button  class="btn__WhatsApp" on:click={sendWA}>Enviar WhatsApp</button>
+                      <button class="btn__saveNote" on:click={()=>saveNote($systStatus, commInpuyBinnacle)}>Guardar Info</button>
                     <!-- {/if} -->
                 </div>
               </div>

@@ -163,7 +163,8 @@
    
 
    .altaContacto{
-      width: 350px;
+      min-width: 200px;
+      max-width: 300px;
 		height: 35px;
 		font-size: 22px;
 		color: rgb(2, 10, 57);

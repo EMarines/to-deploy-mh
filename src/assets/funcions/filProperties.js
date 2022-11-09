@@ -10,11 +10,17 @@ let message;
 // let proInt2=[];
 
     export function filtContPropInte($contact){
-
+      console.log($contact);
        let proInt = dbProperties
+
+
+
         proInt = proInt.filter((item) => item.selectTP === $contact.selecTP);
         console.log("filtraste por tipo de propiedad", proInt )
        
+
+
+
        if ($contact.numBeds > 0) {
          proInt = proInt.filter((item) => item.beds >= $contact.numBeds);
         }
@@ -29,23 +35,26 @@ let message;
         console.log("Por caracteristicas", proInt)
 
     // Filtra por Rango
-        if($contact.budget){
-          console.log("filtraste por budget")
-
-          lowRange=($contact.budget * .7)
-          upRange=($contact.budget * 1.1)
-          console.log(lowRange, upRange)
-          proInt = proInt.filter((prop) => 
-            prop.price >= lowRange && prop.price <= upRange
-          // console.log(prop.price)
-          )         
-        } else {         
-          console.log("filtraste por rango")
-          proInt = proInt.filter((prop) => mosRange(prop.price) === $contact.rangeProp);
-          // console.log(prop.price)
-
-        };
-        console.log("filtraste presupuesto", proInt)
+        if(!!$contact.budget === false && $contact.rangeProp != ""){
+          if($contact.budget){
+            console.log("filtraste por rango", $contact.budget)
+  
+            lowRange=($contact.budget * .7)
+            upRange=($contact.budget * 1.1)
+            console.log(lowRange, upRange)
+            proInt = proInt.filter((prop) => 
+              prop.price >= lowRange && prop.price <= upRange
+            // console.log(prop.price)
+            )         
+          } else {         
+            console.log("filtraste por rango", $contact.rangeProp)
+  
+            proInt = proInt.filter((prop) => mosRange(prop.price) === $contact.rangeProp);
+            // console.log(prop.price)
+  
+          };
+          console.log("filtraste presupuesto", proInt)
+        }
         
     // Filtra por Ubicación  
         if($contact.locaProperty.length > 0){

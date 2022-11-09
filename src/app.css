@@ -42,7 +42,7 @@ body{
   text-align: center;
   border-radius: .5rem;
   position: relative;
-  margin: .75em auto;
+  margin: .25em auto;
   align-items: center;
 }
 
@@ -86,6 +86,7 @@ body{
       font-weight: 400;
       background-color: rgb(193, 226, 7);
       border-radius: 8px;
+      margin-bottom: 3px;
     }
 
     .btn__save{
@@ -99,11 +100,42 @@ body{
       margin-right: 50px;
     }
 
+    .btn__WhatsApp{
+      color:antiquewhite;
+      font-weight: 650;
+      width: 250px;
+      height: 35px;
+      background: green;
+      border-radius: 8px;
+      margin-bottom: 3px;
+    }
+
+    .btn__saveNote{
+      color:antiquewhite;
+      font-weight: 650;
+      width: 250px;
+      height: 35px;
+      background: blue;
+      border-radius: 8px;
+      margin-bottom: 3px;
+    }
+
+    .btn__common{
+      color:antiquewhite;
+      font-weight: 650;
+      width: 250px;
+      height: 35px;
+      background: rgb(79, 78, 78);
+      border-radius: 8px;
+      margin-bottom: 3px;
+    }
+
     .icon__Content{
       display: flex;
       width: 100%;
       justify-content: space-evenly;
     }
+
 
 /* 
 a {

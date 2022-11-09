@@ -70,8 +70,8 @@
                <input type="text" class="inputTask"  placeholder = "Agrega una Tarea o Cita" bind:value = {nombre} />
             </div>
             <!-- <div class="contDate"> -->
-               <input type="time"class="inputDate" bind:value = {tarea.timeTask} />
-               <input type="date" class="inputDate" bind:value = {tarea.endTask} /> 
+               <input type="time"class="inputDate" bind:value = {tarea.timeTask} placeholder="Hora"/>
+               <input type="date" class="inputDate" bind:value = {tarea.endTask} placeholder="Fecha"/> 
             <!-- </div> -->
             <div>
                <textarea name="notes"  cols="40" rows="5" bind:value = {tarea.notes} placeholder ="descripción"></textarea>

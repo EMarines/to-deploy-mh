@@ -30,7 +30,7 @@
           </div> 
 
   <!-- Tipo de propiedad buscada -->  
-      <select class="selTP" id="selTP" name="selTP" bind:value={$property.selecTP}>
+      <select class="selTP" id="selTP" name="selTP" bind:value={$property.selectTP}>
         <option disabled selected value="">Tipo de Propiedad</option>
           {#each typeProperties as selecTP}
             <option type="checkbox" value={selecTP}>{selecTP}</option>

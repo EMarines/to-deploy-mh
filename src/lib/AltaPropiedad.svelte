@@ -36,6 +36,8 @@
                await addDoc(contToAdd, $property);
             }
             $systStatus = "start"
+            // @ts-ignore
+            $property ="";
         };
 
          async function addProperty($property) {

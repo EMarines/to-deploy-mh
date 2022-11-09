@@ -63,7 +63,8 @@ export const contact = writable({
       urlProp: "",
       urlSinergy: "",
       colonia: "",
-      selecTP: "",
+      rangeProp: "",
+      selectTP: "",
       selecTO: "",
       typeOperation: "",      // Tipo de Operación
       tagsProperty: [],

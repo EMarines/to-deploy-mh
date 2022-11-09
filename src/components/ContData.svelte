@@ -51,13 +51,13 @@
 
             
             <div class="contactInput">
-               <input  class="dataInput" type="text" placeholder="Nombre" bind:value={$contact.name}  />
+               <input  class="dataInput" type="text" placeholder="Nombre" bind:value={$contact.name}  required/>
            
                <input class="dataInput" type="text" placeholder="Apellido" bind:value={$contact.lastname} />
             </div>
 
             <div class="contactInput">
-               <input class="dataInput" type="tel" placeholder="teléfono" bind:value={$contact.telephon} />
+               <input class="dataInput" type="tel" placeholder="teléfono" bind:value={$contact.telephon} required/>
                {#if detaAdd}
                   <input class="dataInput" type="email" placeholder="email" bind:value={$contact.email} />
                {/if}
@@ -123,10 +123,10 @@
             </select>
 
    <!-- Rango de busqueda -->
-            <select class="othersInput" id="ranges" name="ranges" bind:value={$contact.rangeProp}>
+            <select class="othersInput" id="ranges" name="ranges" bind:value={$contact.rangeProp} >
                <option disabled selected value="">Rango de Busqueda</option>
                {#each ranges as range}
-                     <option type="checkbox" value={range}>{range}</option>
+                     <option type="checkbox" value={range} >{range}</option>
                {/each}
             </select>
 

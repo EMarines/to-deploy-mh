@@ -14,7 +14,8 @@
 
 <style>	
 	.searchInput{
-		width: 350px;
+		min-width: 200px;
+      max-width: 300px;
 		height: 35px;
 		font-size: 22px;
 		color: rgb(84, 84, 90);

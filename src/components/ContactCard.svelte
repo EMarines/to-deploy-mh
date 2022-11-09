@@ -1,7 +1,7 @@
 <script>
 	// import ContactCard from './ContactCard.svelte';
    import {  formatDate } from '../assets/funcions/sevralFunctions'
-   export let name, lastname, createdAt, contactStage, telephon, email, budget, rangeProp
+   export let name, lastname, createdAt, contactStage, telephon, email, budget, rangeProp 
 </script>
 
 <div class="container  contact" >
@@ -25,7 +25,7 @@
 
 <style>
    .contact{
-      width: 90%;
+      width: 98%;
       max-width: 550px;
       min-width: 280px;
    }
