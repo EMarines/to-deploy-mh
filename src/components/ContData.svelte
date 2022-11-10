@@ -93,8 +93,7 @@
             {#each typeContacts as typeContact}
             <option type="checkbox" value={typeContact}>{typeContact}</option>
             {/each}
-         </select>
-         
+         </select>       
          
    <!-- Modo de Contacto -->
          <select class="othersInput" bind:value={$contact.selecMC}>
@@ -103,17 +102,7 @@
             <option type="checkbox" value={selecMC}>{selecMC}</option>
             {/each}
          </select>
-   
-   <!-- Modo de Pago -->
-      {#if detaAdd}
-            <select class="othersInput" bind:value={$contact.modePay}>
-               <option disabled selected value="">Modo de Pago</option>
-               {#each modePays as modeP}
-               <option type="checkbox" value={modeP}>{modeP}</option>
-               {/each}
-            </select>
 
-  
    <!-- Tipo de propiedad buscada -->
             <select class="othersInput" id="selTP" name="selTP" bind:value={$contact.selecTP}>
                <option disabled selected value="">Tipo de Propiedad</option>
@@ -121,6 +110,16 @@
                      <option type="checkbox" value={selecTP}>{selecTP}</option>
                {/each}
             </select>
+      
+   <!-- Modo de Pago -->
+         {#if detaAdd}
+         <select class="othersInput" bind:value={$contact.modePay}>
+            <option disabled selected value="">Modo de Pago</option>
+            {#each modePays as modeP}
+            <option type="checkbox" value={modeP}>{modeP}</option>
+            {/each}
+         </select>
+
 
    <!-- Rango de busqueda -->
             <select class="othersInput" id="ranges" name="ranges" bind:value={$contact.rangeProp} >

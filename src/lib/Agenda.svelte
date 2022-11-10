@@ -2,16 +2,17 @@
 // @ts-nocheck
 
    // Importaciones
-      import { collection, addDoc, deleteDoc, doc, updateDoc, getDoc } from 'firebase/firestore'
-      import { db, onGetTask, dbTodos } from '../../firebase';
+      import { collection, addDoc, deleteDoc, doc, updateDoc, getDoc, onSnapshot } from 'firebase/firestore'
+      import { db, dbTodos } from '../../firebase';
       import schedule from '../assets/images/schedule.png';
       import { fly, fade } from 'svelte/transition';
-      import { todo, toRender } from '../stores/stores'
+      import { todo, toRender, systStatus } from '../stores/stores'
       import { formatDate } from '../assets/funcions/sevralFunctions'
       import { useNavigate } from "svelte-navigator";
       import { sort } from '../assets/funcions/sort'
       import edit from '../assets/images/edit.svg'
       import calendar_check from '../assets/images/calendar_check.svg'
+      import { onDestroy } from 'svelte';
 
 
    // Declaraciones
@@ -20,36 +21,72 @@
       let error = "";
       let editStatus = false;
       let modeCrud = "addItem"
-      $toRender = dbTodos;
+      // let tarea = [];
+      $systStatus = "start"
 
-   // Renderiza el listado al editar
-         (async() => {
-            onGetTask((querySnapshot) => {
-                  $toRender
+      let tarea = {
+      task: "",
+      isComplete: "",
+      createdAt: "",
+      endTask: "",
+      timeTask: "", 
+      notes: "",
+      user: "" ,
+      id:""       
+      }
+      // let ren = [];
+      // $: ren = dbTodos;
+      // $toRender = dbTodos;
+      
+   // Renderiza el toRender
+         // (async() => {
+         //    onGetTask((querySnapshot) => {
+         //          dbTodos
+         //       })
+         // })();
+         const unsubs = onSnapshot(
+            collection(db, "todos"),
+            (querySnapshot) => {
+               $toRender = querySnapshot.docs.map(doc => {
+                  return{...doc.data(), id: doc.id}
                })
-         })();
-
+               // console.log($toRender);
+            },
+               (err) =>{
+                  console.log(err);
+            }
+            );
+         
+         onDestroy(unsubs)
 
    // Manejo de Agregar o Editar
          async function handTodos() {
+            console.log(tarea, modeCrud);
             if(modeCrud === "deleItem"){
                let confDelete = confirm("Quieres borrarlo definitivmente?");
-                  if(confDelete == true){
-                     await deleteDoc(doc(db, "todos", $todo.id));
-            };
+               if(confDelete === true){
+                  await deleteDoc(doc(db, "todos", $todo.id));
+               };
             } else if(modeCrud === "editItem") {
                await updateDoc(doc(db, "todos", $todo.id), $todo)
+               $toRender = dbTodos
             } else {
-               await addDoc(collection(db, "todos"), $todo);
-            }
+               // console.log(tarea);
+               await addDoc(collection(db, "todos"), tarea);
+            };
             editStatus = false;
-            $todo = {}; 
+            tarea = {}; 
+            // console.log($todo);
+            $systStatus = "start"
             // navigate("/");
          };
 
    // Edita la tarea
          async function editTodo(item) { 
-            $todo=item
+            
+            tarea = item 
+            $todo = tarea;
+            // console.log(item);
             modeCrud = "editItem"
             editStatus = true;
          };
@@ -64,8 +101,9 @@
    // Ocultar agenda al empezar a escribir
       // Al escribir en task
          function typeTask(){
-            if($todo.task.length > 0){
-               editStatus=true;
+            if(tarea.task.length > 0){             
+               $systStatus = "typing"
+               // console.log($systStatus);
             }
          };
 
@@ -95,14 +133,14 @@
             <div class="background" transition:fade on:keydown ={close}/>
                <div class="pop-up" transition:fly>         
                   <div>
-                     <input type="text" class="inputTask" cols="56" rows="1"  placeholder = "Agrega una Tarea o Cita" bind:value = {$todo.task} on:input={typeTask}/>
+                     <input type="text" class="inputTask" cols="56" rows="1"  placeholder = "Agrega una Tarea o Cita" bind:value = {tarea.task} on:input={typeTask}/>
                   </div>
                   <div class="contDate">
-                     <input type="time"class="inputDate" bind:value = {$todo.timeTask} />
-                     <input type="date" class="inputDate" bind:value = {$todo.endTask} /> 
+                     <input type="time"class="inputDate" bind:value = {tarea.timeTask} />
+                     <input type="date" class="inputDate" bind:value = {tarea.endTask} /> 
                   </div>
                   <div>
-                     <textarea name="notes" id="" cols="56" rows="5" bind:value = {$todo.notes} placeholder ="descripción"></textarea>
+                     <textarea name="notes" id="" cols="56" rows="5" bind:value = {tarea.notes} placeholder ="descripción"></textarea>
                   </div>            
                   <div>
                      <!-- <button id="btn-task-save" on:click={handTodos}>Guardar</button> -->
@@ -118,8 +156,9 @@
 
    <!-- Agrega listado de tareas -->
       <div class= "container">     
-         {#if !editStatus}
+         {#if $systStatus === "start"}
             <h3>Tareas</h3>
+               <!-- <h5>Num de tareas: {ren.length}</h5> -->
                <ol>
                   {#each $toRender as item}
                      {#if !item.timeTask}

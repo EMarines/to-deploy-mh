@@ -16,8 +16,8 @@ dbContacts.forEach(element => {
 <div class="cont">
    <h1>Estas en About</h1>
    
-   {#each dbProperties as item}
-      {#if !!item.selectTP === false}
+   {#each dbContacts as item}
+      {#if !!item.selecTP === false}
          <h3>{item.id}</h3>
       {/if}
    {/each}

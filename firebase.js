@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { collection, addDoc, getDoc, getDocs, onSnapshot, getFirestore } from 'firebase/firestore'
+import { collection, addDoc, getDoc, getDocs, onSnapshot, getFirestore, orderBy, limit } from 'firebase/firestore'
 import{ getAuth } from 'firebase/auth';
 // import { $todo } from './src/stores/stores';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -33,14 +33,15 @@ export const auth = getAuth(database)
 // export const obteTareas = () => getDocs(collection(db, 'todos')) 
 
 
-export const onGetTask = (callBack) => onSnapshot(collection(db, 'todos'), callBack);
+// export const onGetTask = (callBack) => onSnapshot(collection(db, 'todos'), callBack);
 
-export {
-   onSnapshot,
-   collection,
-}
+// export {
+//    onSnapshot,
+//    collection,
+// }
 
 
+// @ts-ignore
 const bitacora = collection(db, "binnacles")
 const contactos = collection(db, "contacts")
 const propiedades = collection(db, "properties")
