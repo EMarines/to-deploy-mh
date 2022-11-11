@@ -2,7 +2,7 @@
 <script>
    
    // Importaciones
-      import { db, dbProperties, dbContacts } from '../../firebase';
+      import { db, dbContacts } from '../../firebase';
       import { Link, useNavigate } from "svelte-navigator";
       import { deleteDoc, doc} from 'firebase/firestore';
       import { property, conInterest } from '../stores/stores'
@@ -10,9 +10,8 @@
       import { systStatus } from '../stores/stores';
       import trash from '../assets/images/trash.svg'
       import edit from '../assets/images/edit.svg'
-
-      import ContactCard from './CardProperty.svelte';
-      import { claim_space } from 'svelte/internal';
+      // import ContactCard from './CardProperty.svelte';
+      // import { claim_space } from 'svelte/internal';
       // import { filtPropContInte } from '../assets/funcions/rangValue'
 
    // Declaraciones
@@ -24,8 +23,8 @@
       let editStatus= false;
       let lowRange, upRange;
 
-   // Funciones
-      // checked
+  
+   // checked
          function checkedTCont(checkedContacts, $property ){
 
          }
@@ -73,7 +72,7 @@
                </div>            
                <div class="descSelect">
                <h4> {$property.claveEB} {$property.nameProperty}</h4>
-               <h5>{$property.selecTP} en Col. {$property.colonia} al {$property.locaProperty} de la ciudad.</h5>
+               <h5>{$property.selectTP} en Col. {$property.colonia} al {$property.locaProperty} de la ciudad.</h5>
                <h6>Precio: {$property.price}</h6>
                <div>
                   <h6>{$property.beds} Recamaras, {$property.bathroom} Baños y {$property.halfBathroom} Medio Baño</h6>
@@ -111,20 +110,22 @@
 
 
    <!-- Tarjeta de clientes interesados -->
-         {#if seeCont}
-         {#each $conInterest as item}
-         <div class="conInt">
-                  <input type="checkbox">
-                  <div>{item.name} {item.lastname}</div>
-                  <div>{item.locaProperty}</div>
-                  <div>{item.tagsProperty}</div>
-                  <div>{item.budget}</div>
-                  <div>{item.rangeProp}</div>
-               </div>
+         <div class="container cont__interest">
+            {#if seeCont}
+               {#each $conInterest as item}
+                  <div class="conInt">
+                     <input type="checkbox">
+                     <h3>{item.name} {item.lastname}</h3>
+                     <h4>{item.locaProperty}</h4>
+                     <h4>{item.tagsProperty}</h4>
+                     <div>{item.budget}</div>
+                     <div>{item.rangeProp}</div>
+                  </div>
                {/each}
-         {/if}
+            {/if}
+         </div>
 
- <style>
+<style>
 
     .sele__Product{
       display: flex;
@@ -132,7 +133,7 @@
        width: 80%;
        /* padding: 15px 15px; */
       }
-
+      
       .sele__info{
          display: column;
          margin: 0 auto;
@@ -141,11 +142,24 @@
       .selectImage{
          max-width: 95%;
       }
-
+      
       .conInt{
          width: 300px;
+         min-height: 110px;
          padding: 5px 10px;
          border: solid 2px;
          border-radius: 5px;
+         margin-left: 3px;
+         margin-bottom: 3px;
       }
- </style> 
+
+      .cont__interest{ 
+         width: 100%;
+         margin: 10px;
+         display: flex;
+         flex-direction: row;
+         flex-wrap: wrap;
+         align-items: flex-start;
+         justify-content: center; 
+      }
+</style> 

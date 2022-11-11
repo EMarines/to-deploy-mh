@@ -55,10 +55,8 @@ let conInt = [];
             conInt.filter((cont) => {
               if(cont.locaProperty.length > 0){
                 conIntB = conInt.filter(con => ($property.locaProperty).some(c => (con.locaProperty).includes(c)));
-                console.log($property.locaProperty)
               } else {
                 conIntR = conInt.filter((cont) => cont.locaProperty.length === 0)
-                console.log($property.locaProperty)
               }
             });            
           } catch (error) {
@@ -87,7 +85,6 @@ let conInt = [];
           // conIntB=[];
           // conIntR=[];
           conInt = conIntR.concat(conIntB) 
-          console.log(conInt) 
           return conInterest.set(conInt)
     };
 

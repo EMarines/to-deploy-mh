@@ -1,19 +1,19 @@
 <script>
-	import { binnacle } from './../stores/stores.js';
   // Importaciones
     import { contact, systStatus } from '../stores/stores';
     import ContData from '../components/ContData.svelte';
     import { db } from '../../firebase';
     import { collection, addDoc, doc, updateDoc} from 'firebase/firestore';
-    import { binnSave } from '../assets/funcions/binnSaver'
-    import { now, subscribe } from 'svelte/internal';
-    import PropData from '../components/PropData.svelte';
+    // import { binnacle } from './../stores/stores.js';
+    // import { binnSave } from '../assets/funcions/binnSaver'
+    // import { now, subscribe } from 'svelte/internal';
+    // import PropData from '../components/PropData.svelte';
 
   // Decalraciones
     let editStatus = false;
     let createdAt;
-    let commBinnacle;
-    let noteBinnacle;
+    // let commBinnacle;
+    // let noteBinnacle;
     
     
   // Funciones
@@ -44,15 +44,11 @@
               if($systStatus === "binnAdding"){
                   let commBinnacle = (`Se le agregó a: ${$contact.name} ${$contact.lastname} del ${$contact.telephon}`)
                   let binnInfo = {"date": Date.now(), "comment": commBinnacle}
-                  console.log($systStatus, binnInfo);
-
                   const binnacleToAdd = collection(db, "binnacles")
                   await addDoc(binnacleToAdd, binnInfo);
               } else {
                   let commBinnacle = (`Se le editó a: ${$contact.name} ${$contact.lastname} del ${$contact.telephon}`)
                   let binnInfo = {"date": Date.now(), "comment": commBinnacle}
-                  console.log($systStatus, binnInfo);
-
                   const binnacleToAdd = collection(db, "binnacles")
                   await addDoc(binnacleToAdd, binnInfo);
               }

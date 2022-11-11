@@ -3,23 +3,17 @@ import { proInterest, property } from '../../stores/stores'
 const diaSemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ];
 const mesAnyo = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ];
 let fecha;
+let newFecha
 
 
 
 // Convertir fecha en timestamp a formato legible SIN hora
       export function formatDate(fecha){
-        if(typeof fecha === "string"){
-          // console.log(fecha)
-          // let newfecha = fecha.getTime();
-          // console.log(newfecha)
-          fecha =new Date(fecha);
-          // let newFecha=fecha.getTime()
-          // console.log("string ;", fecha)
-        } else {
           fecha = new Date(fecha);
-          // console.log("number", fecha)
-        }
-          let dia = fecha.getDate();
+        let dia = fecha.getDate();
+          if(typeof fecha != "string"){
+            dia = dia + 1;
+          }
           if(dia < 10){
             dia = '0' + dia
           }

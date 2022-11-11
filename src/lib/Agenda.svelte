@@ -16,8 +16,8 @@
 
 
    // Declaraciones
-      const navigate = useNavigate();
-      
+      const navigate = useNavigate(); 
+
       let error = "";
       let editStatus = false;
       let modeCrud = "addItem"
@@ -25,32 +25,24 @@
       $systStatus = "start"
 
       let tarea = {
-      task: "",
-      isComplete: "",
-      createdAt: "",
-      endTask: "",
-      timeTask: "", 
-      notes: "",
-      user: "" ,
-      id:""       
+         task: "",
+         isComplete: "",
+         createdAt: "",
+         endTask: "",
+         timeTask: "", 
+         notes: "",
+         user: "" ,
+         id:""       
       }
-      // let ren = [];
-      // $: ren = dbTodos;
-      // $toRender = dbTodos;
-      
-   // Renderiza el toRender
-         // (async() => {
-         //    onGetTask((querySnapshot) => {
-         //          dbTodos
-         //       })
-         // })();
+  
+   // Renderiza $toRender y lo ordena por fecha
          const unsubs = onSnapshot(
             collection(db, "todos"),
             (querySnapshot) => {
                $toRender = querySnapshot.docs.map(doc => {
                   return{...doc.data(), id: doc.id}
                })
-               // console.log($toRender);
+                  sort($toRender);
             },
                (err) =>{
                   console.log(err);
@@ -61,32 +53,35 @@
 
    // Manejo de Agregar o Editar
          async function handTodos() {
-            console.log(tarea, modeCrud);
+            // console.log($todo, modeCrud, $systStatus);
+            $todo = tarea;
+            let endTask = new Date($todo.endTask).getTime()
+            $todo = {...$todo, endTask}
+            // console.log($todo);
             if(modeCrud === "deleItem"){
                let confDelete = confirm("Quieres borrarlo definitivmente?");
                if(confDelete === true){
                   await deleteDoc(doc(db, "todos", $todo.id));
                };
             } else if(modeCrud === "editItem") {
-               await updateDoc(doc(db, "todos", $todo.id), $todo)
-               $toRender = dbTodos
+               // await updateDoc(doc(db, "todos", $todo.id), $todo)
+               // $toRender = dbTodos
             } else {
                // console.log(tarea);
-               await addDoc(collection(db, "todos"), tarea);
+               await addDoc(collection(db, "todos"), $todo);
             };
             editStatus = false;
-            tarea = {}; 
+            $todo = {}; 
+            tarea = {};
             // console.log($todo);
             $systStatus = "start"
             // navigate("/");
          };
 
    // Edita la tarea
-         async function editTodo(item) { 
-            
-            tarea = item 
-            $todo = tarea;
-            // console.log(item);
+         async function editTodo(item) {             
+            tarea = item             
+            console.log(item);
             modeCrud = "editItem"
             editStatus = true;
          };
@@ -120,7 +115,6 @@
          };
 
    // Ordena por fecha (endTask) sort
-         sort($toRender);
 
 </script>
 

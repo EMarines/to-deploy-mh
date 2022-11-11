@@ -5,18 +5,18 @@
       import ContactCard from '../components/ContactCard.svelte';
       import Search from '../components/Search.svelte';
       import SelectedContact from '../components/SelectedContact.svelte';
-      import { dbContacts } from '../../firebase';
+      import { dbContacts, db} from '../../firebase';
       import { conInterest, contact, proInterest, systStatus } from '../stores/stores';
       import AltaContacto from './AltaContacto.svelte';
       import { expoInOut } from 'svelte/easing';
       import { scale } from 'svelte/transition';
-
-
-
+      import { collection, onSnapshot } from 'firebase/firestore'
+      import { onDestroy } from 'svelte';
+      
    // Declaraciónes
       let searchTerm;
       $systStatus = "start";
-      let item;
+      // let item;
       // let toRender = [];
       // $conInterest = dbContacts;
 
@@ -33,6 +33,23 @@
          currentPage = newPage;
       };
 
+   // Renderizar
+      const unsubs = onSnapshot(
+            collection(db, "contacts"),
+            (querySnapshot) => {
+               toRender = querySnapshot.docs.map(doc => {
+                  return{...doc.data(), id: doc.id}
+               })
+               console.log(toRender);
+               ordenar(toRender)
+            },
+               (err) =>{
+                  console.log(err);
+            }
+            );
+         
+         onDestroy(unsubs)
+
    // Funciones 
       // Agregar contacto
          const handAddContact = () => {
@@ -48,25 +65,26 @@
 
       // Search contacto
          function searCont() {
-            return toRender= dbContacts.filter((contacto) => {
+            return toRender= toRender.filter((contacto) => {
                let contInfo = (contacto.name + " " + contacto.lastname).toLowerCase();
             return contInfo.includes(searchTerm.toLowerCase());
             });
          };
 
       // Ordena dbContacts por fecha
-         (() => {
-            return toRender = dbContacts.sort((a, b) => {
-               if(new Date(a.createdA) < new Date(b.createdAt)){
+         function ordenar() {
+            toRender.sort((a, b) => {
+               if(new Date(a.createdAt) < new Date(b.createdAt)){
                   return 1;
-               }
-               if(new Date(a.createdAt) > new Date(b.createdAt)){
+               } else if (new Date(a.createdAt) > new Date(b.createdAt)){
                   return -1;
+               } else {
+                  return 0;
                }
-               return 0
-            });
-         })();
+            })
+         };
 
+        
 </script>
 
    <!-- Encabezado de Contactos e imagen -->   
@@ -77,7 +95,7 @@
          </div>
 
          {#if  $systStatus === "start"}
-            <h2>{dbContacts.length} Contactos a Mostrar</h2>
+            <h2>{toRender.length} Contactos a Mostrar</h2>
             <button class="altaContacto" on:click={handAddContact}>Alta de Contacto</button>
 
             <Search bind:searchTerm on:input={searCont} /> 
@@ -159,8 +177,6 @@
    img{
       max-width: 150px;
    }
-
-   
 
    .altaContacto{
       min-width: 200px;

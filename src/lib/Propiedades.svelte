@@ -1,19 +1,22 @@
 <script>
+	// import { toRender } from './../stores/stores.js';
    // Importaciones
       import house from '../assets/images/house.png';
       import Search from '../components/Search.svelte';
       import CardProperty from '../components/CardProperty.svelte';
       import { property, systStatus } from '../stores/stores'
+      import { collection, onSnapshot } from 'firebase/firestore'
+      import { onDestroy } from 'svelte';
       import { searchProperty } from '../assets/funcions/search'
       import { scale } from 'svelte/transition';
       import { expoInOut } from 'svelte/easing';
       import SelectProperty from '../components/SelectProperty.svelte';
-      import { dbProperties } from '../../firebase';
+      import { dbProperties , db } from '../../firebase';
       import AltaPropiedad from './AltaPropiedad.svelte';
 
    // Decalaraciónes
       let searchTerm;
-      // let toRender = [];
+      let toRender = [];
       let editStatus = false;
       let contCheck = [];
       let item;
@@ -23,7 +26,7 @@
    //Pagination
       let currentPage = 1; // Update this to simulate page change.
       let postsPerPage = 20;
-      $: toRender = dbProperties;
+      // $: toRender = dbProperties;
       $: totalPosts = toRender.length;
       $: totalPages = Math.ceil(totalPosts / postsPerPage);
       $: postRangeHigh = currentPage * postsPerPage;
@@ -33,22 +36,36 @@
          currentPage = newPage;
       }
 
+   // Renderizar
+         const unsubs = onSnapshot(
+            collection(db, "properties"),
+            (querySnapshot) => {
+               toRender = querySnapshot.docs.map(doc => {
+                  return{...doc.data(), id: doc.id}
+               })
+               ordenar(toRender)
+            },
+               (err) =>{
+                  console.log(err);
+            }
+            );
+         
+         onDestroy(unsubs)
 
-   // Funciones
-      // Propiedad Seleccionada
+ 
+   // Propiedad Seleccionada
             function selectProduct(item) {
                console.log(item)
                $property = item
                $systStatus = "propSelect"
             };
 
-      // CRUD
-         // Manejo Alta o edición
+   // Manejo Alta o edición
             function handAddPrperty(){
                $systStatus = "propAdding"
             }
       
-      // Search Property
+   // Search Property
             function searProp() {
                return toRender= dbProperties.filter((property) => {
                let contInfo = (property.nameProperty + " " + property.colonia).toLowerCase();
@@ -56,24 +73,22 @@
                })
             };
             
-      // Ordena dbProperties por fecha de publicación
-            (() => {
-            return toRender = dbProperties.sort((a, b) => {
+   // Ordena dbProperties por fecha de publicación
+         function ordenar(toRender) {
+            toRender.sort((a, b) => {
                if(new Date(a.createdAt) < new Date(b.createdAt)){
                   return 1;
-               }
-               if(new Date(a.createdAt) > new Date(b.createdAt)){
+               } else if (new Date(a.createdAt) > new Date(b.createdAt)){
                   return -1;
+               } else {
+                  return 0;
                }
-               return 0
-            });
-         })();
+            })
+         };
 
   
 
 </script>
-
-
       <!--Encabezado de Propiedades e imagen -->
          <div class="container">
             <div>
@@ -82,12 +97,12 @@
             </div>
 
             {#if $systStatus === "start"}  
-               <h2>{dbProperties.length} Propiedades a Mostrar</h2>
+               <h2>{toRender.length} Propiedades a Mostrar</h2>
                <button on:click={handAddPrperty}>Alta de Propiedad</button>
 
                <Search bind:searchTerm on:input={searProp} />
             <!-- {/if} -->
-         <!-- Propiedades -->
+      <!-- Propiedades -->
             <!-- {#if $systStatus === "start"} -->
             <div class="mosPag">   
 
@@ -104,7 +119,7 @@
                   {/each}
                </main>
 
-            <!-- Paginación del en Dom -->
+      <!-- Paginación del en Dom -->
                <div class = "container pagination">
                   <div class="pagi__Item">
                      <ul class="pagi__options">
@@ -146,20 +161,20 @@
             </div>
 
             {/if}
-         <!-- Propiedad seleccionada -->
+      <!-- Propiedad seleccionada -->
             {#if $systStatus === "propSelect"}
                <div>
                   <SelectProperty {...$property} /> 
                </div>
             {/if}   
-         <!-- Edición de propiedad -->           
+      <!-- Edición de propiedad -->           
                   {#if $systStatus  === "propEditing"}               
                      <div class="container"> 
                         <AltaPropiedad  {...$property}/>
                      </div>
                   {/if} 
 
-         <!-- Alta de propiedad -->             
+      <!-- Alta de propiedad -->             
                   {#if $systStatus === "propAdding"}
                      <div class="container">
                         <AltaPropiedad  />
@@ -169,7 +184,7 @@
                
          </div>
          <!-- </div> -->
- <style>
+<style>
 
    main#bookshelf {
       width: 100%;
@@ -195,4 +210,4 @@
       max-width: 148px;
    }
 
- </style>
+</style>

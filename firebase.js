@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { collection, addDoc, getDoc, getDocs, onSnapshot, getFirestore, orderBy, limit } from 'firebase/firestore'
+import { collection, getDoc, getDocs, onSnapshot, getFirestore, orderBy, limit } from 'firebase/firestore'
 import{ getAuth } from 'firebase/auth';
 // import { $todo } from './src/stores/stores';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -51,7 +51,7 @@ function getBinnacles() {
   getDocs(bitacora)
   .then((response) => {
      return  dbBinnacle = response.docs.map((item) => {
-        return {... item.data()};
+        return {... item.data(), id: item.id};
      })
   })
 };
@@ -84,15 +84,15 @@ getDocs(propiedades)
 })
 })();
 
-(() => {
-getDocs(tareas)
-.then((response) => {
-   return dbTodos = response.docs.map((item) => {
-      return {... item.data(), id: item.id};
-   })
- }) 
+// (() => {
+// getDocs(tareas)
+// .then((response) => {
+//    return dbTodos = response.docs.map((item) => {
+//       return {... item.data(), id: item.id};
+//    })
+//  }) 
 
-})();
+// })();
 
 
 // export function obteTareas(){
