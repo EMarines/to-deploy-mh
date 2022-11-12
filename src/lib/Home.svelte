@@ -1,14 +1,5 @@
 <script>
-	// import { isLogged } from './../store/isLogged.js';
-	// import FindToErase from './../components/FindToErase.svelte';
-  // import { db } from '../assets/db.js'
   import { Router, Route, Link } from "svelte-navigator";
-  // import Contactos from './Contactos.svelte';
-  // import Propiedades from './Propiedades.svelte';
-  import Agenda from './Agenda.svelte';
-  import Sinergias from './Sinergias.svelte';
-  import Login from "./Register.svelte";
-  import Registro from "./Register.svelte";
   import Schedule from '../components/Schedule.svelte'
   import Binnacle from '../components/Binnacle.svelte'
   import user from '../assets/images/add-user.png';
@@ -16,6 +7,15 @@
   import schedule from '../assets/images/schedule.png';
   import team from '../assets/images/team.png';
   import { isAuth } from '../store/isLogged'
+  // import Contactos from './Contactos.svelte';
+  // import Propiedades from './Propiedades.svelte';
+	// import { isLogged } from './../store/isLogged.js';
+	// import FindToErase from './../components/FindToErase.svelte';
+  // import { db } from '../assets/db.js'
+  import Registro from "./Register.svelte";
+  import Agenda from './Agenda.svelte';
+  import Sinergias from './Sinergias.svelte';
+  import Login from "./Register.svelte";
   // import { dbContacts, dbProperties, dbTodos } from '../../firebase'
 
 </script>
@@ -112,33 +112,33 @@
 
 <style>
 
-.wrapper-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 13rem);
-  justify-content: center; 
-}
+    .wrapper-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 13rem);
+      justify-content: center; 
+    }
 
-.optionCard{
-  width: 100%;
-  height: auto;
-  background-color: aquamarine;
-  padding-top: 5px;
-}
+    .optionCard{
+      width: 100%;
+      height: auto;
+      background-color: aquamarine;
+      padding-top: 5px;
+    }
 
-  .profile-img {
-    width: 8rem;
-    clip-path: circle(70px at center);
-    margin-top: 1.5rem;
-  }
+      .profile-img {
+        width: 8rem;
+        clip-path: circle(70px at center);
+        margin-top: 1.5rem;
+      }
 
-  .name {
-    font-weight: bold;
-    font-size: 1.5rem;
-  }
+      .name {
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
 
-  body{
-  width: 98%;
-  margin: 0 auto;
-}
+      body{
+      width: 98%;
+      margin: 0 auto;
+    }
 
 </style>

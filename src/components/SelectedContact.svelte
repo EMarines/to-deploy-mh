@@ -1,53 +1,53 @@
 <script>
 // @ts-nocheck
 
-  // Importaciones
-    import { db, dbContacts, dbProperties, dbBinnacle } from '../../firebase';
-    import { collection, deleteDoc, doc, addDoc} from 'firebase/firestore';
-    import Search from './Search.svelte';
-    import AddToSchedule from './AddToSchedule.svelte';
-    import CardProperty from './CardProperty.svelte';
-    import { contact, systStatus, proInterest, property, binnacle, modeAction } from '../stores/stores.js';
-    import { filtContPropInte } from '../assets/funcions/filProperties'
-    import { formatDate} from '../assets/funcions/sevralFunctions';
-    import { scale } from 'svelte/transition';
-    import { expoInOut } from 'svelte/easing';
-    import { binnSave } from '../assets/funcions/binnSaver';
-    import trash from '../assets/images/trash.svg'
-    import edit from '../assets/images/edit.svg';
-    import { useNavigate } from "svelte-navigator";
-    // import AltaContacto from '../lib/AltaContacto.svelte';
-    // import { searchProperty } from '../assets/funcions/search'
+    // Importaciones
+      import { db, dbContacts, dbProperties, dbBinnacle } from '../../firebase';
+      import { collection, deleteDoc, doc, addDoc} from 'firebase/firestore';
+      import Search from './Search.svelte';
+      import AddToSchedule from './AddToSchedule.svelte';
+      import CardProperty from './CardProperty.svelte';
+      import { contact, systStatus, proInterest, property, binnacle, modeAction } from '../stores/stores.js';
+      import { filtContPropInte } from '../assets/funcions/filProperties'
+      import { formatDate} from '../assets/funcions/sevralFunctions';
+      import { scale } from 'svelte/transition';
+      import { expoInOut } from 'svelte/easing';
+      import { binnSave } from '../assets/funcions/binnSaver';
+      import trash from '../assets/images/trash.svg'
+      import edit from '../assets/images/edit.svg';
+      import { useNavigate } from "svelte-navigator";
+      // import AltaContacto from '../lib/AltaContacto.svelte';
+      // import { searchProperty } from '../assets/funcions/search'
  
-  // Declaraciones
-    const navigate = useNavigate();
-    let mostImageProp = false;
-    let imgToShow;
-    let mostPoperties = false;
-    let isActivated = false;
-    let searchTerm;
-    let editStatus= false;
-    let message;
-    let filteredProperties = [];
-    let commInpuyBinnacle;
-    let mostButtons = false;
-    let contCheck = [];
-    let showProp = false;
-    let mosrBusq = false;
-    let proInt = [];
-    let listToRender = [];
-    let showAltCont = false;
-    let bitacora = [];
-    let bit = [];
-    let date = [];
-    let comment = [];
+    // Declaraciones
+      const navigate = useNavigate();
+      let mostImageProp = false;
+      let imgToShow;
+      let mostPoperties = false;
+      let isActivated = false;
+      let searchTerm;
+      let editStatus= false;
+      let message;
+      let filteredProperties = [];
+      let commInpuyBinnacle;
+      let mostButtons = false;
+      let contCheck = [];
+      let showProp = false;
+      let mosrBusq = false;
+      let proInt = [];
+      let listToRender = [];
+      let showAltCont = false;
+      let bitacora = [];
+      let bit = [];
+      let date = [];
+      let comment = [];
 
-  // Busca la imagen de la propiedad a renderizar
-      function findURLImage(itemP) {
-        mostImageProp = true;
-        imgToShow = dbProperties.filter((e) => e.claveEB === (itemP))
-        return  imgToShow[0].urlImage;
-      };
+    // Busca la imagen de la propiedad a renderizar
+        function findURLImage(itemP) {
+          mostImageProp = true;
+          imgToShow = dbProperties.filter((e) => e.claveEB === (itemP))
+          return  imgToShow[0].urlImage;
+        };
 
     // Abre el link de la página web
       function visitPageProp(link) {
@@ -172,8 +172,6 @@
         let bitT = bitacora.filter(item => item.action === "Propiedad enviada: ")
         // bitT.forEach(item => console.log(item.comment))
         bitT.forEach(item => bit.push(item.comment))
-
-        console.log("propiedades", bit);
       })();
         
 </script>
