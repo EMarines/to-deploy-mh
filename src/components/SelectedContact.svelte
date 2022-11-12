@@ -16,12 +16,11 @@
     import trash from '../assets/images/trash.svg'
     import edit from '../assets/images/edit.svg';
     import { useNavigate } from "svelte-navigator";
-    import AltaContacto from '../lib/AltaContacto.svelte';
-    import { searchProperty } from '../assets/funcions/search'
+    // import AltaContacto from '../lib/AltaContacto.svelte';
+    // import { searchProperty } from '../assets/funcions/search'
  
-    const navigate = useNavigate();
-
   // Declaraciones
+    const navigate = useNavigate();
     let mostImageProp = false;
     let imgToShow;
     let mostPoperties = false;
@@ -39,20 +38,15 @@
     let listToRender = [];
     let showAltCont = false;
     let bitacora = [];
+    let bit = [];
     let date = [];
     let comment = [];
 
-  // Funciones
-    // Muestra la imagen de propiedad cuendo el punero está sobre la clave
-      function mouseOverProp(itemP) {
+  // Busca la imagen de la propiedad a renderizar
+      function findURLImage(itemP) {
         mostImageProp = true;
         imgToShow = dbProperties.filter((e) => e.claveEB === (itemP))
-      };
-    
-    // Desaparece la imagen de la propiedad al salir de su area
-      function mouseLeaveProp() {
-        mostImageProp = false
-        // console.log("saliste")
+        return  imgToShow[0].urlImage;
       };
 
     // Abre el link de la página web
@@ -66,10 +60,10 @@
         isActivated = true;
       }
     // Muestra search Properties
-      function mostSearch () {
-        mosrBusq = true;
-        // console.log($systStatus, $contact)
-      };
+        function mostSearch () {
+          mosrBusq = true;
+          // console.log($systStatus, $contact)
+        };
 
     // Input filter ""searchContact""
         const searProp = () => {
@@ -82,11 +76,11 @@
 
 
     // Muestra las propiedades que le podrían intesar
-      function fitProp($contact) {
-        // console.log($contact)
-        filtContPropInte($contact)
-        showProp = true;
-      };
+        function fitProp($contact) {
+          // console.log($contact)
+          filtContPropInte($contact)
+          showProp = true;
+        };
 
     // Cancel Button ""start""
       const onCancel = () => {
@@ -175,6 +169,11 @@
     // Busca la bitácora
       (() =>{
         bitacora = dbBinnacle.filter(item => item.to === $contact.telephon)
+        let bitT = bitacora.filter(item => item.action === "Propiedad enviada: ")
+        // bitT.forEach(item => console.log(item.comment))
+        bitT.forEach(item => bit.push(item.comment))
+
+        console.log("propiedades", bit);
       })();
         
 </script>
@@ -198,25 +197,30 @@
     <!-- Muestra las propiedes enviadas -->
               <p> Propiedades enviadas:</p>
                 <div class="mostImage">
-                  {#each $contact.sendedProperties as itemP}           
+                  {#each bit as itemP}           
                       <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-                      <p value = {itemP} on:mouseenter = {()=>mouseOverProp (itemP)} on:mouseout ={mouseLeaveProp} on:dblclick = {() => visitPageProp(imgToShow[0].urlProp)}>{itemP}</p> 
+                      <div class="prop__sent">
+                        <p>{itemP}</p> 
+                        <img class="imgPropContSelect" height = "100" src={findURLImage(itemP)} alt={itemP}> 
+                      </div>
+
+
                   {/each}
                 </div>
               </div>
             </div>
 
           <div>
-            {#if mostImageProp}        
+            <!-- {#if mostImageProp}        
               <h3>{imgToShow[0].nameProperty}</h3>
-              <img class="imgPropContSelect" height = "200" src={imgToShow[0].urlImage} alt={imgToShow[0].claveEB}> 
-            {/if}           
+              <img class="imgPropContSelect" height = "100" src={imgToShow[0].urlImage} alt={imgToShow[0].claveEB}> 
+            {/if}            -->
           </div>
 
             <p>{$contact.contactStage}</p>
             <p>{$contact.comContact}</p>
     <!-- Botones -->
-          <div>
+          <div class="btn__actions">
             <button class="btn__common" on:click = {() => addSchedule($contact)}>Programar Evento</button>
               {#if isActivated}
                 <AddToSchedule {...$contact} on:closeIt = {close} />
@@ -290,8 +294,11 @@
     color: blue;
   }
   .mostImage{
+    display: flex;
     margin: 0 auto;
-    width: 150px;
+    width: 90%;
+    height: 50px;
+    justify-content: space-evenly;
   }
 
   .property { 
@@ -312,6 +319,16 @@
       flex-wrap: wrap;
       align-items: flex-start;
       justify-content: center; 
+   }
+
+   .prop__sent{
+    /* display: col; */
+    height: 150px;
+    margin: auto;
+   }
+
+   .btn__actions{
+    margin-top: 100px;
    }
 
 

@@ -62,13 +62,19 @@ let message;
         };
         console.log("Filtraste por Ubicacion", proInt)
         
+
+
+
     // Filtra por Etiquetas
         if($contact.tagsProperty.length > 0){
           // console.log("estas dentro de tags", $contact.tagsProperty.length)
-          proInt= proInt.filter(e => $contact.tagsProperty.every(c => e.tagsProperty.includes(c)));
+          proInt= proInt.filter(e => $contact.tagsProperty.every(c => e.tagsProperty.exludes(c)));
         };
         console.log("Filtraste por localizacion", proInt) 
 
+
+
+        
     // Mensaje de no contactos
         if (proInt.length === 0) {
             message = "No hay resultados con este criterio de busqueda"

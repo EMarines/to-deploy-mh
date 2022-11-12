@@ -40,7 +40,6 @@
                toRender = querySnapshot.docs.map(doc => {
                   return{...doc.data(), id: doc.id}
                })
-               console.log(toRender);
                ordenar(toRender)
             },
                (err) =>{
