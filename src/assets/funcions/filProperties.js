@@ -68,7 +68,7 @@ let message;
     // Filtra por Etiquetas
         if($contact.tagsProperty.length > 0){
           // console.log("estas dentro de tags", $contact.tagsProperty.length)
-          proInt= proInt.filter(e => $contact.tagsProperty.every(c => e.tagsProperty.exludes(c)));
+          proInt= proInt.filter(e => $contact.tagsProperty.every(c => e.tagsProperty.includes(c)));
         };
         console.log("Filtraste por localizacion", proInt) 
 

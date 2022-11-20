@@ -1,15 +1,20 @@
 
 <script>
+	// import { systStatus, binnacle, modeAction, conInterest } from './../stores/stores.js';
+// @ts-nocheck
+
    
    // Importaciones
-      import { db, dbContacts } from '../../firebase';
+      import { db, dbContacts, dbProperties, dbBinnacle } from '../../firebase';
       import { Link, useNavigate } from "svelte-navigator";
       import { deleteDoc, doc} from 'firebase/firestore';
-      import { property, conInterest } from '../stores/stores'
+      import { property, conInterest, toRender } from '../stores/stores'
       import { filtPropContInte } from '../assets/funcions/filContacts'
-      import { systStatus } from '../stores/stores';
+      import { systStatus, contact, binnacle, modeAction } from '../stores/stores';
       import trash from '../assets/images/trash.svg'
-      import edit from '../assets/images/edit.svg'
+      import edit from '../assets/images/edit.svg';
+  import { construct_svelte_component_dev } from 'svelte/internal';
+      // import { $systStatus, binnacle, modeAction} from '../stores/stores'
       // import ContactCard from './CardProperty.svelte';
       // import { claim_space } from 'svelte/internal';
       // import { filtPropContInte } from '../assets/funcions/rangValue'
@@ -17,11 +22,20 @@
    // Declaraciones
       const navigate = useNavigate();
       let checkedContacts = [];
+      let contChecked = [];
       let conInt = [];
       let currentId;
       let seeCont = false;
       let editStatus= false;
+      let msg;
+      let toShow =["Posobles_Interesados", "Por_Enviar", "Ya_Se_Envió" ]
+      let contInterested="";
       let lowRange, upRange;
+      let bitacora=[];
+      let bit = [];
+      let sent =[];
+      let toSend = [];
+      let res = [];
 
   
    // checked
@@ -47,14 +61,135 @@
           }  
         };
 
+   //  WhatshApp
+         function sendWA(){    
+            console.log($modeAction);       
+               // let link = (`https://api.whatsapp.com/send?phone=52${contChecked}&text=${$property.urlProp}`)
+               // window.open(link);
+               $modeAction = "sendProperties"
+               let claveProp = $property.claveEB
+               sendProperty(contChecked, claveProp)
+            };
+
+   // Guarda en bitácora la propiedad enviada
+         function sendProperty(contChecked){
+            console.log($property);
+            let proSent = $property.claveEB
+            $systStatus = "binnAdding"
+            let propertyL = dbProperties.filter((item) => item.urlProp === contChecked[0])
+            // $property = propertyL[0]
+            if($modeAction === "sendMsg"){
+               $binnacle = {"date": Date.now(), "comment": contChecked, "to": $contact.telephon, "action": "Mensaje enviado: "}
+            } else if ($modeAction === "sendProperties"){
+               $binnacle = {"date": Date.now(), "comment": $property.claveEB, "to": $contact.telephon, "action": "Enviada desde propiedad: "}
+               console.log($binnacle);
+            }else {
+               $binnacle = {"date": Date.now(), "comment": $property.claveEB, "to": $contact.telephon, "action": "Propiedad enviada: "}
+            }
+            // binnSave($systStatus, $binnacle )
+            $modeAction = "";
+            $systStatus = "contSelect"
+         };
+
+   // Check imput
+         function toChecked(){
+            console.log("propiedad ch", propCheck)
+         }
+
+
+
+
+
+
+let tosend =[];
+   // Agrupar contactos por enviar, enviado e interesado
+         function splitContStat(){
+            // console.log($conInterest);
+            $conInterest.forEach((cont) => {
+               tosend = cont.sendedProperties.indexOf($property.claveEB)
+
+               
+               // console.log(tosend);
+               if(tosend >= 0){
+                  sent.push(cont)
+                  $toRender = sent
+                  //   console.log(sent);
+               } else {
+                  toSend.push(cont);
+                  $toRender = toSend
+                  // console.log(toSend);
+               }
+               // console.log(toSend, sent);
+            })
+         }
+
+
+
+let n = 1
+
+
+
+
+   // Separar contactos agrupados
+         function listToRender(){           
+            if(contInterested === "Posobles_Interesados"){
+               $toRender = $conInterest
+               // res = dbBinnacle.filter(item =>
+               // item.comment != $property.claveEB)
+            } else if(contInterested === "Por_Enviar"){
+               toSend=[];
+               res = dbBinnacle.filter(item =>
+               item.comment != $property.claveEB)
+               dbContacts.filter((cont) =>{
+                  res.forEach(binn => {
+                     if(cont.telephon === binn.to){
+                        toSend.push(cont)}
+                        $toRender = toSend
+                  })
+               })
+            } else if(contInterested === "Ya_Se_Envió"){
+               sent=[];
+               res = dbBinnacle.filter(item =>
+               item.comment === $property.claveEB)
+               console.log(res);
+               dbContacts.filter((cont) =>{
+                  res.forEach(binn => {
+                     if(cont.telephon === binn.to){
+                        sent.push(cont)}
+                        $toRender = sent
+                  })
+               })
+            }
+         }
+
+
+
+
+
+         function funcClaveEB(){
+         // console.log(cont);
+         // res = dbBinnacle.filter(item =>
+         //    item.comment === $property.claveEB
+         // )
+
+         // console.log("res", res);
+      }
+
+
+
+
+
+
+
+
       // Buscar Interesados
          function findCustomers() {
             // console.log("La propiedad es: ", $property)
+            seeCont = true;
             filtPropContInte($property, dbContacts)
             // $contToRender = conInt;
-            // console.log(conInt)
-            seeCont = true;
          }; 
+         // console.trace(conInt)
 
       // onCancel
          function onCancel() {
@@ -62,6 +197,25 @@
             $property = [];
             $systStatus="start"
          };
+
+      // Busca las propiedades enviadas al contacto
+         function sendProperties(){
+            console.log(dbBinnacle);
+            bitacora = dbBinnacle.filter(item => item.to === $contact.telephon)
+            console.log(bitacora);
+            let bitT = bitacora.filter(item => item.action === "Propiedad enviada: ")
+            // bitT.forEach(item => console.log(item.comment))
+            bitT.forEach(item => bit.push(item.comment))
+            console.log(bit);
+          };
+            sendProperties($contact)
+
+// const contR = {
+//    nombre: "Rolo",
+//    ci: ["EB-CL9379", "EB-CK9689"]
+// }
+
+      // funcClaveEB(contR)
 
 </script>
    <!-- Informacion de la propiedad -->
@@ -90,7 +244,7 @@
                <div class="optionsSend" >
 
    <!-- Buscar interesados -->
-                  <button class="btnCommon btnWhatsApp" on:click={() => checkedTCont(checkedContacts, $property)}>Enviar por WhatsApp</button>
+                  <button class="btnCommon btnWhatsApp" on:click={sendWA}>Enviar por WhatsApp</button>
                   <button class="btnCommon" on:click={findCustomers}>Buscar Interesados</button>
                </div>
    <!-- resto -->
@@ -112,14 +266,24 @@
    <!-- Tarjeta de clientes interesados -->
          <div class="container cont__interest">
             {#if seeCont}
-               {#each $conInterest as item}
+               <div class="sect__Title">
+                  <h1>A {$conInterest.length} Contactos Le Puede Interesar Esta Propiedad</h1>
+
+                  {#each toShow as list}
+                     <label>
+                        <input type=radio bind:group={contInterested} value={list} on:change={listToRender}>
+                        {list}
+                     </label>
+                  {/each}
+               </div>
+               {#each $toRender as $contact}
                   <div class="conInt">
-                     <input type="checkbox">
-                     <h3>{item.name} {item.lastname}</h3>
-                     <h4>{item.locaProperty}</h4>
-                     <h4>{item.tagsProperty}</h4>
-                     <div>{item.budget}</div>
-                     <div>{item.rangeProp}</div>
+                     <input type="checkbox" value={$contact.telephon} bind:group={contChecked}/>
+                     <h3>{$contact.name} {$contact.lastname}</h3>
+                     <h4>{$contact.locaProperty}</h4>
+                     <h4>{$contact.tagsProperty}</h4>
+                     <div>{$contact.budget}</div>
+                     <div>{$contact.rangeProp}</div>
                   </div>
                {/each}
             {/if}
@@ -161,5 +325,9 @@
          flex-wrap: wrap;
          align-items: flex-start;
          justify-content: center; 
+      }
+
+      .sect__Title{
+         width: 90%;
       }
 </style> 

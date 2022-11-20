@@ -16,6 +16,7 @@
       import trash from '../assets/images/trash.svg'
       import edit from '../assets/images/edit.svg';
       import { useNavigate } from "svelte-navigator";
+      // import { sendProperties } from '../assets/funcions/sentProperties'
       // import AltaContacto from '../lib/AltaContacto.svelte';
       // import { searchProperty } from '../assets/funcions/search'
  
@@ -56,13 +57,11 @@
 
     // Mostrar Schedule
       function addSchedule(){
-        console.log("estas en addSchedule")
         isActivated = true;
       }
     // Muestra search Properties
         function mostSearch () {
           mosrBusq = true;
-          // console.log($systStatus, $contact)
         };
 
     // Input filter ""searchContact""
@@ -77,7 +76,6 @@
 
     // Muestra las propiedades que le podrían intesar
         function fitProp($contact) {
-          // console.log($contact)
           filtContPropInte($contact)
           showProp = true;
         };
@@ -98,14 +96,9 @@
     // Delete Contact
         async function deleteContact() {
           if(confirm("Deseas eleiminar definitivamente al contacto?")){
-            // console.log("Borraste al contacto", $contact)
             await deleteDoc(doc(db, "contacts", $contact.id))
             warnDeleteContact($contact)
             navigate("/");
-            // editStatus = false;
-            // $contact = [];
-            //  window.location.href = "/";
-            // window.location.href = "/";    ********************************************************************
           }  
         };
 
@@ -134,7 +127,7 @@
             $modeAction = "sendMsg"
           }
           let link = (`https://api.whatsapp.com/send?phone=52${$contact.telephon}&text=${contCheck}`)
-          window.open(link);
+          window.open(link, "ventana1","width=350,height=350,scrollbars=NO" );
           sendProperty(contCheck)
         };
     // Muestra botones WhatsApp y Guardar Info    
@@ -166,13 +159,23 @@
           $systStatus = "contSelect"
         };
 
-    // Busca la bitácora
-      (() =>{
-        bitacora = dbBinnacle.filter(item => item.to === $contact.telephon)
-        let bitT = bitacora.filter(item => item.action === "Propiedad enviada: ")
-        // bitT.forEach(item => console.log(item.comment))
-        bitT.forEach(item => bit.push(item.comment))
-      })();
+    // Busca la bitácora las propiedades enviadas
+      // (() =>{
+      //   bitacora = dbBinnacle.filter(item => item.to === $contact.telephon)
+      //   let bitT = bitacora.filter(item => item.action === "Propiedad enviada: ")
+      //   // bitT.forEach(item => console.log(item.comment))
+      //   bitT.forEach(item => bit.push(item.comment))
+      // })();
+
+          function sendProperties($contact){
+            bitacora = dbBinnacle.filter(item => item.to === $contact.telephon)
+            let bitT = bitacora.filter(item => item.action === "Propiedad enviada: ")
+            // bitT.forEach(item => console.log(item.comment))
+            bitT.forEach(item => bit.push(item.comment))
+            // console.log(bit);
+          };
+      sendProperties($contact)
+      console.log(bit);
         
 </script>
 
@@ -293,6 +296,8 @@
   }
   .mostImage{
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     margin: 0 auto;
     width: 90%;
     height: 50px;
@@ -320,9 +325,9 @@
    }
 
    .prop__sent{
-    /* display: col; */
-    height: 150px;
-    margin: auto;
+    width: 250px;    
+    height: 130px;
+    margin-left: 5px;
    }
 
    .btn__actions{

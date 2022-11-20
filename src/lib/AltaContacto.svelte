@@ -42,13 +42,14 @@
           async function infoToBinnacle ($systStatus, $contact) {  
             try {
               if($systStatus === "binnAdding"){
-                  let commBinnacle = (`Se le agregó a: ${$contact.name} ${$contact.lastname} del ${$contact.telephon}`)
-                  let binnInfo = {"date": Date.now(), "comment": commBinnacle}
+                  let commBinnacle = (`${$contact.name} ${$contact.lastname}`)
+                  let binnInfo = {"date": Date.now(), "comment": commBinnacle, "action": "Se agregó a: ", "to": $contact.telephon }
                   const binnacleToAdd = collection(db, "binnacles")
                   await addDoc(binnacleToAdd, binnInfo);
               } else {
-                  let commBinnacle = (`Se le editó a: ${$contact.name} ${$contact.lastname} del ${$contact.telephon}`)
-                  let binnInfo = {"date": Date.now(), "comment": commBinnacle}
+                  let commBinnacle = (`Se le editó a: ${$contact.name} ${$contact.lastname}`)
+                  let binnInfo = {"date": Date.now(), "comment": commBinnacle, "action": "Se editó a: ", "to": $contact.telephon }
+                  console.log(binnInfo);
                   const binnacleToAdd = collection(db, "binnacles")
                   await addDoc(binnacleToAdd, binnInfo);
               }

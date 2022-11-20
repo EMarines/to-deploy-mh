@@ -26,7 +26,7 @@ a<script>
                   return{...doc.data(), id: doc.id}
                })
                ordenar(toRenBinn)
-               console.log(toRenBinn)
+            //    console.log(toRenBinn)
             },
                (err) =>{
                   console.log(err);
@@ -46,8 +46,11 @@ a<script>
                 <div class="int-binnacle">
                     {#if i < 20}
                         <div class="date-binnacle">
-                            {formatDate(item.date)}                  
+                            {formatDate(item.date)} 
+                            {item.action}                 
                             {item.comment}
+                            a: 
+                            {item.to}
                         </div>
                     {/if}                          
                 </div>

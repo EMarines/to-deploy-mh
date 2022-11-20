@@ -16,10 +16,7 @@
    // Declaraciónes
       let searchTerm;
       $systStatus = "start";
-      // let item;
-      // let toRender = [];
-      // $conInterest = dbContacts;
-
+     
    //Pagination
       let currentPage = 1; // Update this to simulate page change.
       let postsPerPage = 15;
@@ -64,8 +61,8 @@
 
       // Search contacto
          function searCont() {
-            return toRender= toRender.filter((contacto) => {
-               let contInfo = (contacto.name + " " + contacto.lastname).toLowerCase();
+            return toRender= dbContacts.filter((contacto) => {
+               let contInfo = contacto.telephon + (contacto.name + " " + contacto.lastname).toLowerCase();
             return contInfo.includes(searchTerm.toLowerCase());
             });
          };

@@ -49,8 +49,6 @@ let conInt = [];
           // console.log(conInt)
 
   // Filtra por Ubicación  
-
-
           try {
             conInt.filter((cont) => {
               if(cont.locaProperty.length > 0){
