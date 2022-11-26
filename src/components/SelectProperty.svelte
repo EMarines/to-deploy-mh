@@ -9,6 +9,7 @@
       import { property, conInterest, toRender } from '../stores/stores'
       import { filtPropContInte } from '../assets/funcions/filContacts'
       import { systStatus, contact, binnacle, modeAction } from '../stores/stores';
+      import { diaTarde } from '../assets/funcions/sevralFunctions'
       import trash from '../assets/images/trash.svg'
       import edit from '../assets/images/edit.svg';
       import { construct_svelte_component_dev, debug } from 'svelte/internal';
@@ -35,6 +36,7 @@
       let toSend = [];
       let tosend =[];
       let res = [];
+      let msgHora;
 
    // checked
          function checkedTCont(checkedContacts, $property ){
@@ -61,9 +63,12 @@
 
    //  WhatshApp
          function sendWA(){    
-            console.log($modeAction);       
-               // let link = (`https://api.whatsapp.com/send?phone=52${contChecked}&text=${$property.urlProp}`)
-               // window.open(link);
+            console.log($modeAction); 
+           let saludoHora = diaTarde()
+            contChecked = "6142754512"
+               let msg = (`${$contact.name}. ${saludoHora}  Te envío esta casa que creo te va a interesar. ¡Saludos!`)       
+               let link = (`https://api.whatsapp.com/send?phone=52${contChecked}&text=${$property.urlProp}      ${msg}`)
+               window.open(link, "ventana1","width=350,height=350,scrollbars=NO");
                $modeAction = "sendProperties"
                let claveProp = $property.claveEB
                sendProperty(contChecked, claveProp)
@@ -205,15 +210,15 @@
                </div>
                <div class="optionsSend" >
 
-   <!-- Buscar interesados -->
-                  <button class="btnCommon btnWhatsApp" on:click={sendWA}>Enviar por WhatsApp</button>
-                  <button class="btnCommon" on:click={findCustomers}>Buscar Interesados</button>
+      <!-- Buscar interesados -->
+                  <button class="btn__WhatsApp" on:click={sendWA}>Enviar por WhatsApp</button>
+                  <button class="btn__saveNote" on:click={findCustomers}>Buscar Interesados</button>
                </div>
-   <!-- resto -->
+      <!-- resto -->
                <div class="backAnt">
-                  <button class="btnCommon btnCancel" on:click={onCancel}>Regresar</button>
+                  <button class="btn__cancel" on:click={onCancel}>Regresar</button>
                </div>
-   <!-- Edit Delete Icons -->
+      <!-- Edit Delete Icons -->
                   <div class="icon__Content">
                      <!-- svelte-ignore a11y-click-events-have-key-events -->
                      <img on:click = {editProperty} src={edit} alt="delete">

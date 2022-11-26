@@ -3,6 +3,7 @@ import { proInterest, property } from '../../stores/stores'
 const diaSemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ];
 const mesAnyo = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ];
 let fecha;
+let saludoHora;
 let newFecha
 
 
@@ -53,10 +54,21 @@ let newFecha
             let dia = diaSemana[fecha.getDay()];
 
           return (`${dia}-`)
-
-
-          
           };
+
+// Definir si es dia, tarde o noche
+        export function diaTarde(){
+          fecha = new Date()
+          let hora = fecha.getHours()
+          if(hora < 12){
+            saludoHora = "Buenos días."
+          } else if (hora < 8){
+            saludoHora = "Buenas tardes."
+          } else {
+            saludoHora = "Buenas noches."
+          }
+          return saludoHora
+        }
 
 // Copiar al portapapeles
 
