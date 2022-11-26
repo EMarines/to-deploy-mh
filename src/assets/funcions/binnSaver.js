@@ -3,18 +3,18 @@ import { collection, deleteDoc, doc, addDoc, updateDoc} from 'firebase/firestore
 import { binnacle, property, contact, systStatus } from '../../stores/stores'
 
 
-   export async function binnSave($systStatus, $binnacle){
+   export async function binnSave($systStatus, binn){
       if($systStatus === "binnAdding"){
-         console.log($binnacle);
+         console.log($systStatus, binn);
          const binnacleToAdd = collection(db, "binnacles")
-         await addDoc(binnacleToAdd, $binnacle);
+         await addDoc(binnacleToAdd, binn);
       } else if($systStatus === "binnacleUpdate") {
          // await updateDoc(doc(db, "binnacles", $binnacle.id), $binnacle)
          // editStatus = false;
       } else if($systStatus === "binnacleDelete") {
          // await deleteDoc(doc(db, "binnacles", $binnacle.id))
       }
-      $binnacle = [];
+      binn = [];
    }
 
    // PROYECTO, TODOS LAS BITACORAS GUARDARLAS DESDE AQUÍ****************

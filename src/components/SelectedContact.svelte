@@ -47,7 +47,18 @@
         function findURLImage(itemP) {
           mostImageProp = true;
           imgToShow = dbProperties.filter((e) => e.claveEB === (itemP))
-          return  imgToShow[0].urlImage;
+          // console.log(imgToShow[0].urlImage);
+          // if(imgToShow[0].urlImage === undefined){
+          //   console.log("foto fam");
+          //   return  "https://assets.easybroker.com/property_images/1031233/15455598/medium_EB-CY1233.png"
+          // } else {
+            console.log("imagen");
+            try {              
+              return imgToShow[0].urlImage;
+            } catch (error) {
+              return  "https://assets.easybroker.com/property_images/1031233/15455598/medium_EB-CY1233.png" 
+            }
+          // }
         };
 
     // Abre el link de la página web
@@ -172,10 +183,10 @@
             let bitT = bitacora.filter(item => item.action === "Propiedad enviada: ")
             // bitT.forEach(item => console.log(item.comment))
             bitT.forEach(item => bit.push(item.comment))
-            // console.log(bit);
+            console.log(bit);
           };
       sendProperties($contact)
-      console.log(bit);
+      // console.log(bit);
         
 </script>
 

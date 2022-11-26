@@ -9,6 +9,11 @@ let conInt = [];
 // Filtrar property -- properties
     export function filtPropContInte($property, conInt){
       // console.log(conInt)
+
+  // Tipo de contacto
+      conInt = conInt.filter((item) => item.typeContact === "Comprador");
+      // console.log("tipo Contacto", conInt)
+
   // Tipo de propiedad
         conInt = conInt.filter((item) => item.selecTP === $property.selectTP);
         // console.log("tipo Prop", conInt)

@@ -110,6 +110,13 @@
                      <option type="checkbox" value={selecTP}>{selecTP}</option>
                {/each}
             </select>
+   <!-- Rango de busqueda -->
+            <select class="othersInput" id="ranges" name="ranges" bind:value={$contact.rangeProp} >
+               <option disabled selected value="">Rango de Busqueda</option>
+               {#each ranges as range}
+                     <option type="checkbox" value={range} >{range}</option>
+               {/each}
+            </select>
       
    <!-- Modo de Pago -->
          {#if detaAdd}
@@ -121,13 +128,7 @@
          </select>
 
 
-   <!-- Rango de busqueda -->
-            <select class="othersInput" id="ranges" name="ranges" bind:value={$contact.rangeProp} >
-               <option disabled selected value="">Rango de Busqueda</option>
-               {#each ranges as range}
-                     <option type="checkbox" value={range} >{range}</option>
-               {/each}
-            </select>
+
 
 
    <!-- Características buscadas -->

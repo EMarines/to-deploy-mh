@@ -1,19 +1,17 @@
 
 <script>
-	// import { systStatus, binnacle, modeAction, conInterest } from './../stores/stores.js';
 // @ts-nocheck
 
-   
    // Importaciones
       import { db, dbContacts, dbProperties, dbBinnacle } from '../../firebase';
       import { Link, useNavigate } from "svelte-navigator";
-      import { deleteDoc, doc} from 'firebase/firestore';
+      import { deleteDoc, doc, DocumentSnapshot} from 'firebase/firestore';
       import { property, conInterest, toRender } from '../stores/stores'
       import { filtPropContInte } from '../assets/funcions/filContacts'
       import { systStatus, contact, binnacle, modeAction } from '../stores/stores';
       import trash from '../assets/images/trash.svg'
       import edit from '../assets/images/edit.svg';
-  import { construct_svelte_component_dev } from 'svelte/internal';
+      import { construct_svelte_component_dev, debug } from 'svelte/internal';
       // import { $systStatus, binnacle, modeAction} from '../stores/stores'
       // import ContactCard from './CardProperty.svelte';
       // import { claim_space } from 'svelte/internal';
@@ -27,7 +25,7 @@
       let currentId;
       let seeCont = false;
       let editStatus= false;
-      let msg;
+      let msg = "Contactos";
       let toShow =["Posobles_Interesados", "Por_Enviar", "Ya_Se_Envió" ]
       let contInterested="";
       let lowRange, upRange;
@@ -35,9 +33,9 @@
       let bit = [];
       let sent =[];
       let toSend = [];
+      let tosend =[];
       let res = [];
 
-  
    // checked
          function checkedTCont(checkedContacts, $property ){
 
@@ -101,95 +99,66 @@
 
 
 
-let tosend =[];
    // Agrupar contactos por enviar, enviado e interesado
          function splitContStat(){
             // console.log($conInterest);
-            $conInterest.forEach((cont) => {
-               tosend = cont.sendedProperties.indexOf($property.claveEB)
+            // $conInterest.forEach((cont) => {
+            //    tosend = cont.sendedProperties.indexOf($property.claveEB)
 
                
-               // console.log(tosend);
-               if(tosend >= 0){
-                  sent.push(cont)
-                  $toRender = sent
-                  //   console.log(sent);
-               } else {
-                  toSend.push(cont);
-                  $toRender = toSend
-                  // console.log(toSend);
-               }
-               // console.log(toSend, sent);
-            })
+            //    // console.log(tosend);
+            //    if(tosend >= 0){
+            //       sent.push(cont)
+            //       $toRender = sent
+            //       //   console.log(sent);
+            //    } else {
+            //       toSend.push(cont);
+            //       $toRender = toSend
+            //       // console.log(toSend);
+            //    }
+            //    // console.log(toSend, sent);
+            // })
          }
 
 
 
-let n = 1
 
 
 
 
    // Separar contactos agrupados
-         function listToRender(){           
+         function listToRender(){ 
             if(contInterested === "Posobles_Interesados"){
+               msg = "Contactos Les Puede Interesar Esta Propiedad"
                $toRender = $conInterest
-               // res = dbBinnacle.filter(item =>
-               // item.comment != $property.claveEB)
             } else if(contInterested === "Por_Enviar"){
                toSend=[];
-               res = dbBinnacle.filter(item =>
-               item.comment != $property.claveEB)
-               dbContacts.filter((cont) =>{
-                  res.forEach(binn => {
-                     if(cont.telephon === binn.to){
-                        toSend.push(cont)}
-                        $toRender = toSend
-                  })
-               })
-            } else if(contInterested === "Ya_Se_Envió"){
-               sent=[];
+               msg = "No Se Les Ha Enviado Esta Propieadad"
                res = dbBinnacle.filter(item =>
                item.comment === $property.claveEB)
-               console.log(res);
+               const contsT = res.map(doc => doc.to)
+               toSend = $conInterest.filter(doc => !contsT.includes(doc.telephon))               
+               $toRender = toSend
+            } else if(contInterested === "Ya_Se_Envió"){
+               sent=[];
+               msg = "Ya se les envió esta propiedad"
+               res = dbBinnacle.filter(item =>
+               item.comment === $property.claveEB)
                dbContacts.filter((cont) =>{
                   res.forEach(binn => {
                      if(cont.telephon === binn.to){
-                        sent.push(cont)}
-                        $toRender = sent
+                        sent.push(cont)
+                     }
+                     })
+                     $toRender = sent
                   })
-               })
             }
          }
-
-
-
-
-
-         function funcClaveEB(){
-         // console.log(cont);
-         // res = dbBinnacle.filter(item =>
-         //    item.comment === $property.claveEB
-         // )
-
-         // console.log("res", res);
-      }
-
-
-
-
-
-
-
-
       // Buscar Interesados
          function findCustomers() {
-            // console.log("La propiedad es: ", $property)
             seeCont = true;
             filtPropContInte($property, dbContacts)
-            // $contToRender = conInt;
          }; 
-         // console.trace(conInt)
 
       // onCancel
          function onCancel() {
@@ -200,22 +169,15 @@ let n = 1
 
       // Busca las propiedades enviadas al contacto
          function sendProperties(){
-            console.log(dbBinnacle);
-            bitacora = dbBinnacle.filter(item => item.to === $contact.telephon)
-            console.log(bitacora);
-            let bitT = bitacora.filter(item => item.action === "Propiedad enviada: ")
-            // bitT.forEach(item => console.log(item.comment))
-            bitT.forEach(item => bit.push(item.comment))
-            console.log(bit);
+            // bitacora = dbBinnacle.filter(item => item.to === $contact.telephon)
+            // let bitT = bitacora.filter(item => item.action === "Propiedad enviada: ")
+            // // bitT.forEach(item => console.log(item.comment))
+            // bitT.forEach(item => bit.push(item.comment))
           };
-            sendProperties($contact)
+            // sendProperties($contact)
 
-// const contR = {
-//    nombre: "Rolo",
-//    ci: ["EB-CL9379", "EB-CK9689"]
-// }
 
-      // funcClaveEB(contR)
+
 
 </script>
    <!-- Informacion de la propiedad -->
@@ -267,8 +229,7 @@ let n = 1
          <div class="container cont__interest">
             {#if seeCont}
                <div class="sect__Title">
-                  <h1>A {$conInterest.length} Contactos Le Puede Interesar Esta Propiedad</h1>
-
+                  <h1>A {$toRender.length} {msg}</h1>
                   {#each toShow as list}
                      <label>
                         <input type=radio bind:group={contInterested} value={list} on:change={listToRender}>
@@ -280,10 +241,23 @@ let n = 1
                   <div class="conInt">
                      <input type="checkbox" value={$contact.telephon} bind:group={contChecked}/>
                      <h3>{$contact.name} {$contact.lastname}</h3>
-                     <h4>{$contact.locaProperty}</h4>
-                     <h4>{$contact.tagsProperty}</h4>
-                     <div>{$contact.budget}</div>
-                     <div>{$contact.rangeProp}</div>
+                     {#if $contact.locaProperty === false}
+                        <h4>{$contact.locaProperty}</h4>
+                     {:else}
+                        <h4>Sin Zona Establecida</h4>
+                     {/if}
+                     {#if $contact.budget > 0}
+                        <div>{$contact.budget}</div>
+                     {:else if $contact.rangeProp != ""}
+                        <div>{$contact.rangeProp}</div>
+                     {:else}
+                        <h4>Sin Rango Establecido</h4>
+                     {/if}
+                     {#if $contact.tagsProperty === false}
+                        <div>{$contact.tagsProperty}</div>
+                     {:else}
+                        <h4>Sin Etiquetas</h4>
+                     {/if}
                   </div>
                {/each}
             {/if}
