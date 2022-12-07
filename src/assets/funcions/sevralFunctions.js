@@ -4,25 +4,30 @@ const diaSemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes
 const mesAnyo = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ];
 let fecha;
 let saludoHora;
-let newFecha
+let dia, mes, ano;
+// let mes;
 
 
 
 // Convertir fecha en timestamp a formato legible SIN hora
       export function formatDate(fecha){
-          fecha = new Date(fecha);
-        let dia = fecha.getDate();
-          if(typeof fecha != "string"){
-            dia = dia + 1;
-          }
+        if(typeof fecha == "number"){
+          let factZonaHorario= 64800000  // Diferencia de zona GTM a esta zona(18 horas  a milisegundos)
+          fecha = new Date(fecha + factZonaHorario); 
+          dia = fecha.getDate();
           if(dia < 10){
             dia = '0' + dia
           }
-          let mes = mesAnyo[fecha.getMonth()];
-          let ano = fecha.getFullYear();
-
+          mes = mesAnyo[fecha.getMonth()];
+          ano = fecha.getFullYear();
+        } else {
+          fecha = new Date(fecha);
+          dia = fecha.getDate();
+          mes = mesAnyo[fecha.getMonth()];
+          ano = fecha.getFullYear();
+        }
           return (`${dia}/${mes}/${ano}`)
-       }
+      }
 
 // Convertir HORA en timestamp   
       export function formatHour(fecha){
@@ -51,7 +56,7 @@ let newFecha
 //  Extraer dia de la semana
         export function formatDay(fecha){
           fecha = new Date(+fecha)
-            let dia = diaSemana[fecha.getDay()];
+            dia = diaSemana[fecha.getDay()];
 
           return (`${dia}-`)
           };

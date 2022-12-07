@@ -6,17 +6,17 @@
   import home from '../assets/images/house.png';
   import schedule from '../assets/images/schedule.png';
   import team from '../assets/images/team.png';
-  import { isAuth } from '../store/isLogged'
-  // import Contactos from './Contactos.svelte';
-  // import Propiedades from './Propiedades.svelte';
-	// import { isLogged } from './../store/isLogged.js';
-	// import FindToErase from './../components/FindToErase.svelte';
-  // import { db } from '../assets/db.js'
+  import { isAuth } from '../store/isLogged'  
   import Registro from "./Register.svelte";
   import Agenda from './Agenda.svelte';
   import Sinergias from './Sinergias.svelte';
   import Login from "./Register.svelte";
   // import { dbContacts, dbProperties, dbTodos } from '../../firebase'
+  // import Contactos from './Contactos.svelte';
+  // import Propiedades from './Propiedades.svelte';
+	// import { isLogged } from './../store/isLogged.js';
+	// import FindToErase from './../components/FindToErase.svelte';
+  // import { db } from '../assets/db.js'
 
 </script>
 
@@ -101,7 +101,7 @@
 
     <div class="">
   <!--Schedule  -->
-    <Schedule (orderTodos)/>
+    <Schedule />
     
 <!-- BITÁCORA -->
          <Binnacle /> 

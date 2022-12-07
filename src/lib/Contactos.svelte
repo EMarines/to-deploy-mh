@@ -8,6 +8,7 @@
       import { dbContacts, db} from '../../firebase';
       import { conInterest, contact, proInterest, systStatus } from '../stores/stores';
       import AltaContacto from './AltaContacto.svelte';
+      import { sort } from '../assets/funcions/sort'
       import { expoInOut } from 'svelte/easing';
       import { scale } from 'svelte/transition';
       import { collection, onSnapshot } from 'firebase/firestore'
@@ -37,7 +38,7 @@
                toRender = querySnapshot.docs.map(doc => {
                   return{...doc.data(), id: doc.id}
                })
-               ordenar(toRender)
+               sort(toRender)
             },
                (err) =>{
                   console.log(err);
@@ -67,18 +68,7 @@
             });
          };
 
-      // Ordena dbContacts por fecha
-         function ordenar() {
-            toRender.sort((a, b) => {
-               if(new Date(a.createdAt) < new Date(b.createdAt)){
-                  return 1;
-               } else if (new Date(a.createdAt) > new Date(b.createdAt)){
-                  return -1;
-               } else {
-                  return 0;
-               }
-            })
-         };
+
 
         
 </script>

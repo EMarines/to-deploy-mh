@@ -115,8 +115,8 @@
 
     // Agrega a Bitácora que se eliminó al contacto
         async function warnDeleteContact($contact){
-          let commBinnacle = (`Se le eliminóa: ${$contact.name} ${$contact.lastname} del ${$contact.telephon}`)
-                  let binnInfo = {"date": Date.now(), "comment": commBinnacle}
+          let commBinnacle = (`${$contact.name} ${$contact.lastname}`)
+                  let binnInfo = {"date": Date.now(), "comment": commBinnacle, "action": "Se eliminó a: ", "to": ($contact.telephon)}
                   console.log($systStatus, binnInfo);
 
                   const binnacleToAdd = collection(db, "binnacles")

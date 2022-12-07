@@ -7,6 +7,7 @@
         "Departamento",
         "Casa o Departamento",
         "Local Comercial",
+        "Edificio",
         "Casa de Campo"
       ];
     // Modo de contacto
@@ -25,12 +26,14 @@
     // Tipo de contacto
           export const typeContacts = [
             "Comprador",
-            "Arrendador",
+            "Arrendatario",
             "Propietario",
+            "En Captación",
             "Agente Asociado",
             "Agente Inmobiliario",
             "Constructor",
             "Inversionista",
+            "En Trámite",
             "Otro",
           ];
 

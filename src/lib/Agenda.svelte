@@ -3,10 +3,10 @@
 
    // Importaciones
       import { collection, addDoc, deleteDoc, doc, updateDoc, getDoc, onSnapshot } from 'firebase/firestore'
-      import { db, dbTodos } from '../../firebase';
+      import { db, dbTodos} from '../../firebase';
       import schedule from '../assets/images/schedule.png';
       import { fly, fade } from 'svelte/transition';
-      import { todo, toRender, systStatus } from '../stores/stores'
+      import { todo, systStatus } from '../stores/stores'
       import { formatDate } from '../assets/funcions/sevralFunctions'
       import { useNavigate } from "svelte-navigator";
       import { sort } from '../assets/funcions/sort'
@@ -21,8 +21,8 @@
       let error = "";
       let editStatus = false;
       let modeCrud = "addItem"
-      // let tarea = [];
-      $systStatus = "start"
+      $systStatus = "start";
+      let toRender=[];
 
       let tarea = {
          task: "",
@@ -39,10 +39,11 @@
          const unsubs = onSnapshot(
             collection(db, "todos"),
             (querySnapshot) => {
-               $toRender = querySnapshot.docs.map(doc => {
+               toRender = querySnapshot.docs.map(doc => {
                   return{...doc.data(), id: doc.id}
                })
-                  sort($toRender);
+                  sort(toRender);
+                  console.log(toRender);
             },
                (err) =>{
                   console.log(err);
@@ -53,28 +54,23 @@
 
    // Manejo de Agregar o Editar
          async function handTodos() {
-            // console.log($todo, modeCrud, $systStatus);
+            console.log($todo, modeCrud, $systStatus);
             $todo = tarea;
             let endTask = new Date($todo.endTask).getTime()
             $todo = {...$todo, endTask}
-            // console.log($todo);
             if(modeCrud === "deleItem"){
                let confDelete = confirm("Quieres borrarlo definitivmente?");
                if(confDelete === true){
                   await deleteDoc(doc(db, "todos", $todo.id));
                };
             } else if(modeCrud === "editItem") {
-               // await updateDoc(doc(db, "todos", $todo.id), $todo)
-               // $toRender = dbTodos
+               await updateDoc(doc(db, "todos", $todo.id), $todo)
             } else {
-               // console.log(tarea);
                await addDoc(collection(db, "todos"), $todo);
             };
             editStatus = false;
             $todo = {}; 
             tarea = {};
-            // console.log($todo);
-            $systStatus = "start"
             // navigate("/");
          };
 
@@ -94,7 +90,7 @@
          };
 
    // Ocultar agenda al empezar a escribir
-      // Al escribir en task
+   // Al escribir en task
          function typeTask(){
             if(tarea.task.length > 0){             
                $systStatus = "typing"
@@ -114,7 +110,6 @@
             navigate("/contactos")
          };
 
-   // Ordena por fecha (endTask) sort
 
 </script>
 
@@ -154,7 +149,7 @@
             <h3>Tareas</h3>
                <!-- <h5>Num de tareas: {ren.length}</h5> -->
                <ol>
-                  {#each $toRender as item}
+                  {#each toRender as item}
                      {#if !item.timeTask}
                         <div>
                            <li class="schedule" class:complete={item.isComplete}>
@@ -186,7 +181,7 @@
    <!-- Agrega citas -->
          <h3>Agenda</h3>
             <ol>
-               {#each $toRender as item}            
+               {#each toRender as item}            
                   {#if item.timeTask}
                      <div  on:dblclick={() => editTodo}>
                            <li class="schedule" class:complete={item.isComplete}>

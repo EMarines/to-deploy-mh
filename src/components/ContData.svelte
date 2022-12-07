@@ -82,7 +82,7 @@
 
    <!-- Comentarios del contacto -->
          <div class="col">
-            <input class="textareaInput" type="textarea" placeholder="Comentarios" bind:value={$contact.comContact}/>
+            <textarea class="textareaInput" type="textarea" placeholder="Comentarios" bind:value={$contact.comContact}/>
          </div>
 
          

@@ -8,6 +8,7 @@ import{ getAuth } from 'firebase/auth';
 
 // Declaraciones
 
+
   export let dbContacts = [];
   export let dbBinnacle = [];
   export let dbProperties = [];
@@ -42,24 +43,23 @@ export const auth = getAuth(database)
 
 
 // @ts-ignore
-const bitacora = collection(db, "binnacles")
-const contactos = collection(db, "contacts")
-const propiedades = collection(db, "properties")
-const tareas = collection(db, "todos")
+const bitacora = collection(db, "binnacles");
+const contactos = collection(db, "contacts");
+const propiedades = collection(db, "properties");
+const tareas = collection(db, "todos");
 
-function getBinnacles() {
-  getDocs(bitacora)
-  .then((response) => {
-     return  dbBinnacle = response.docs.map((item) => {
-        return {... item.data(), id: item.id};
-     })
-  })
-};
+// function getBinnacles() {
+//   getDocs(bitacora)
+//   .then((response) => {
+//      return  dbBinnacle = response.docs.map((item) => {
+//         return {... item.data(), id: item.id};
+//      })
+//   })
+// };
 
 (() => {
   getDocs(bitacora)
   .then((response) => {
-     // @ts-ignore
       return dbBinnacle = response.docs.map((item) => {
         return {... item.data(), id: item.id};
      })
