@@ -1,4 +1,5 @@
    <script>
+      import { toComaSep } from '../assets/funcions/numbSeparator'
       export let urlImage, claveEB, nameProperty, beds, bathroom, park, areaBuilding, areaTotal, price
 
    </script>
@@ -11,6 +12,10 @@
                <figcaption>{nameProperty}</figcaption>
             </figure>
          </section> 
+
+
+
+         
    
          <section class="book-bottom-links">
             <section class="from-pariyatti available-at">
@@ -22,7 +27,8 @@
                   <div>{areaTotal} m2 de Terreno</div>
                   <br>
                   <div>
-                     Precio $: {price}
+                     Precio: $ {toComaSep(price)}
+                     <!-- Precio: $ {price} -->
                   </div>
                </div>
             </section>

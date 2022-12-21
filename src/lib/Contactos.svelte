@@ -51,6 +51,7 @@
       // Agregar contacto
          const handAddContact = () => {
             $systStatus = "contAdding"
+            // $contact = [];
          };
 
       // Contacto Seleccionado

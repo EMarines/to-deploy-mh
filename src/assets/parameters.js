@@ -8,6 +8,7 @@
         "Casa o Departamento",
         "Local Comercial",
         "Edificio",
+        "Bodega",
         "Casa de Campo"
       ];
     // Modo de contacto

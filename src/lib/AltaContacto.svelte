@@ -34,7 +34,7 @@
                infoToBinnacle($systStatus, $contact)
                editStatus = false;
             }
-            $contact = ""; 
+            $contact = []; 
             $systStatus = "contSelect"
         };
 

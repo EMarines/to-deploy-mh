@@ -67,7 +67,7 @@ let dia, mes, ano;
           let hora = fecha.getHours()
           if(hora < 12){
             saludoHora = "Buenos días."
-          } else if (hora < 8){
+          } else if (hora < 21){
             saludoHora = "Buenas tardes."
           } else {
             saludoHora = "Buenas noches."

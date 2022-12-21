@@ -1,6 +1,7 @@
 <script>
 	// import ContactCard from './ContactCard.svelte';
    import {  formatDate } from '../assets/funcions/sevralFunctions'
+   import { toTele } from '../assets/funcions/numbSeparator'
    export let name, lastname, createdAt, contactStage, telephon, email, budget, rangeProp 
 </script>
 
@@ -14,7 +15,7 @@
     
       <div class="nameDate">
         <p>{contactStage}</p>
-        <p>tel: {telephon} email: {email}</p>
+        <p>tel: {toTele(telephon)} email: {email}</p>
         <p>Presupuesto {budget}</p>
         <p>Rango {rangeProp}</p>
       </div>
